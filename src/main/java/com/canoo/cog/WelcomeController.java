@@ -3,10 +3,6 @@ package com.canoo.cog;
 import java.io.IOException;
 import java.util.List;
 
-import com.canoo.cog.sonar.SonarService;
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.sonar.model.SonarProject;
-import com.canoo.cog.ui.CityBuilder;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -19,6 +15,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+
+import com.canoo.cog.sonar.SonarService;
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
+import com.canoo.cog.ui.CityBuilder;
 
 class WelcomeController {
 
@@ -60,8 +61,10 @@ class WelcomeController {
 
     public void init() {
 
-       // sonarHostname.setText("https://ci.canoo.com/sonar/");
-    	 sonarHostname.setText("http://localhost:9000/");
+       // sonarHostname.setText("https://ci.canoo.com/sonar/");http://nemo.sonarqube.org/
+    	sonarHostname.setText("http://localhost:9000/");
+    	sonarHostname.setText("http://nemo.sonarqube.org/");
+    	 
 
         keyColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("key"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("name"));
@@ -86,7 +89,9 @@ class WelcomeController {
 
         CityModel cityData;
         try {
-            cityData = sonarService.getCityData(projects.get(projectTable.getSelectionModel().getSelectedIndex()).getKey());
+        	
+        	SonarProject selectedItem = (SonarProject)projectTable.getSelectionModel().getSelectedItem();
+            cityData = sonarService.getCityData(selectedItem.getKey());
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
