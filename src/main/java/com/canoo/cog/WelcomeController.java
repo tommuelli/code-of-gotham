@@ -109,7 +109,7 @@ class WelcomeController {
             sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText());
             projects = null;
             try {
-                projects = sonarService.getProjects();
+            	projects = sonarService.getProjects();
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
