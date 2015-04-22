@@ -120,4 +120,18 @@ public class ModelImpl implements Model {
         this.statements = statements;
     }
 
+	@Override
+	public String toString() {
+		return "ModelImpl [name=" + name + ", linesOfCode=" + linesOfCode
+				+ ", classes=" + classes + ", files=" + files
+				+ ", directories=" + directories + ", functions=" + functions
+				+ ", statements=" + statements + ", publicApi=" + publicApi
+				+ ", commentLines=" + commentLines + ", complexity="
+				+ complexity + ", tests=" + tests + ", classComplexity="
+				+ classComplexity + ", commentLineDensity="
+				+ commentLineDensity + ", coverage=" + coverage
+				+ ", fileComplexity=" + fileComplexity
+				+ ", functionComplexity=" + functionComplexity + "]";
+	}
+
 }
