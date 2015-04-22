@@ -39,7 +39,11 @@ import com.canoo.cog.ui.strategy.SonarToStrategyConerter;
 
 public class CityBuilder {
 
-    private static final int STREET_SIZE = 6;
+    private static final int SCENE_HEIGHT = 1000;
+
+	private static final int SCENE_WIDTH = 1500;
+
+	private static final int STREET_SIZE = 6;
 
     private CityModel cityData;
 
@@ -95,13 +99,13 @@ public class CityBuilder {
         Group root = new Group();
 
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
-        Scene scene = new Scene(root, 1500, 1000, true);
+        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
         scene.setFill(Color.BLACK);
         scene.setCamera(camera);
 
         // Add city to group and translate them according to model
         int hoodHeight = 1;
-        int potentialHeight = resultNode.getSize() / 300;
+        int potentialHeight = resultNode.getSize() / 400;
         if(potentialHeight > 1) {
             hoodHeight = potentialHeight;
         }
@@ -142,14 +146,15 @@ public class CityBuilder {
 
 	private void setTextProperties(Group root, City city) {
 		double depthCorrection = -city.getLayoutBounds().getDepth()/2;
-		double heightCorrectionTitle =  -city.getLayoutBounds().getHeight() / 3;
-		double heightCorrectionInfo =  -city.getLayoutBounds().getHeight() / 4;
 		
-		double widthCorrectionTitle =  city.getLayoutBounds().getHeight() / 3 -10;
-		double widthCorrectionInfo =  city.getLayoutBounds().getHeight() / 3;
+		double heightCorrectionTitle =  -(SCENE_HEIGHT / 2 -20);
+		double heightCorrectionInfo =  -SCENE_HEIGHT / 4;
 		
-		double tileFont = Math.max(city.getLayoutBounds().getDepth()/6, 42);
-		double txtFont = Math.max(city.getLayoutBounds().getDepth()/12, 32);
+		double widthCorrectionTitle =  SCENE_WIDTH / 3 -10;
+		double widthCorrectionInfo =  SCENE_WIDTH / 3;
+		
+		double tileFont = Math.min(city.getLayoutBounds().getDepth()/6, 42);
+		double txtFont = Math.min(city.getLayoutBounds().getDepth()/12, 18);
 		
 		Text titleTxt = new Text(title);
 		titleTxt.setFont(Font.font("Helvetica", FontWeight.BOLD, tileFont));
@@ -171,11 +176,11 @@ public class CityBuilder {
 
 		titleGroup.setTranslateY(heightCorrectionTitle);
 		titleGroup.setTranslateX(widthCorrectionTitle);
-//		titleGroup.setTranslateZ(depthCorrection);
+		titleGroup.setTranslateZ(depthCorrection);
 
 		elementInfoGroup.setTranslateY(heightCorrectionInfo);
 		elementInfoGroup.setTranslateX(widthCorrectionInfo);
-//		elementInfoGroup.setTranslateZ(depthCorrection);
+		elementInfoGroup.setTranslateZ(depthCorrection);
 	}
 
   private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
