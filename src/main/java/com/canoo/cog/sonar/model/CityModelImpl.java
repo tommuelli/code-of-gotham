@@ -29,7 +29,8 @@ public class CityModelImpl extends ModelImpl implements CityModel {
     public void addBuildingToCity(BuildingModelImpl building) {
         int hoodIndex = getAppropriateHoodIndex(building);
         if (hoodIndex == -1) {
-            throw new RuntimeException("Building does not belong to a neighborhood! This should not happen! Check implementationi.");
+	            System.out.println("Building: " + building+" \n does not belong to a neighborhood! -> skip it ... ");
+	            
         } else {
             hoods.get(hoodIndex).addBuildingToHood(building);
         }
