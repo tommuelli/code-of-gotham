@@ -16,10 +16,10 @@ public class JsonObjectWrapperTest {
     public void testCompareToSmaller() throws Exception {
 
         JsonObject upperObject = new JsonObject();
-        upperObject.addProperty("name", "com/canoo/volta");
+        upperObject.addProperty("lname", "com/canoo/volta");
 
         JsonObject lowerObject = new JsonObject();
-        lowerObject.addProperty("name", "com/canoo/volta/resources");
+        lowerObject.addProperty("lname", "com/canoo/volta/resources");
 
         JsonObjectWrapper upperWrapper = new JsonObjectWrapper(upperObject);
         JsonObjectWrapper lowerWrapper = new JsonObjectWrapper(lowerObject);
@@ -32,10 +32,10 @@ public class JsonObjectWrapperTest {
     public void testCompareToEqual() throws Exception {
 
         JsonObject upperObject = new JsonObject();
-        upperObject.addProperty("name", "com/canoo/volta/resources");
+        upperObject.addProperty("lname", "com/canoo/volta/resources");
 
         JsonObject lowerObject = new JsonObject();
-        lowerObject.addProperty("name", "com/canoo/volta/resources");
+        lowerObject.addProperty("lname", "com/canoo/volta/resources");
 
         JsonObjectWrapper upperWrapper = new JsonObjectWrapper(upperObject);
         JsonObjectWrapper lowerWrapper = new JsonObjectWrapper(lowerObject);
@@ -48,10 +48,10 @@ public class JsonObjectWrapperTest {
     public void testCompareToBigger() throws Exception {
 
         JsonObject upperObject = new JsonObject();
-        upperObject.addProperty("name", "com/canoo/volta/resources");
+        upperObject.addProperty("lname", "com/canoo/volta/resources");
 
         JsonObject lowerObject = new JsonObject();
-        lowerObject.addProperty("name", "com/canoo/volta");
+        lowerObject.addProperty("lname", "com/canoo/volta");
 
         JsonObjectWrapper upperWrapper = new JsonObjectWrapper(upperObject);
         JsonObjectWrapper lowerWrapper = new JsonObjectWrapper(lowerObject);
@@ -94,16 +94,16 @@ public class JsonObjectWrapperTest {
 
         Collections.sort(elements);
 
-        assertEquals(one, elements.get(0).object.get("name").getAsString());
-        assertEquals(two, elements.get(1).object.get("name").getAsString());
-        assertEquals(three, elements.get(2).object.get("name").getAsString());
-        assertEquals(four, elements.get(3).object.get("name").getAsString());
-        assertEquals(five, elements.get(4).object.get("name").getAsString());
+        assertEquals(one, elements.get(0).object.get("lname").getAsString());
+        assertEquals(two, elements.get(1).object.get("lname").getAsString());
+        assertEquals(three, elements.get(2).object.get("lname").getAsString());
+        assertEquals(four, elements.get(3).object.get("lname").getAsString());
+        assertEquals(five, elements.get(4).object.get("lname").getAsString());
     }
 
     private void addElementToList(List<JsonObjectWrapper> elements, String name) {
         JsonObject object = new JsonObject();
-        object.addProperty("name", name);
+        object.addProperty("lname", name);
         elements.add(new JsonObjectWrapper(object));
     }
 }
