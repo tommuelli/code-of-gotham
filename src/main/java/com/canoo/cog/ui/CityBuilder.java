@@ -86,7 +86,7 @@ public class CityBuilder {
         solver.solveProblem(resultNode, STREET_SIZE);
 
         // Start music
-        Media media = new Media(getClass().getResource("Starship - We Built This City.mp3").toString());
+        Media media = new Media(getClass().getResource("We Built This City Cover.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.stop();
         mediaPlayer.setAutoPlay(true);
