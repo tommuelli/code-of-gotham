@@ -16,8 +16,9 @@ public class SonarConstants {
     public static final String FUNCTION_COMPLEXITY = "function_complexity";
     public static final String COMMENT_LINES = "comment_lines";
     public static final String COMMENT_LINES_DENSITY = "comment_lines_density";
-
-    public static final String LIST_OF_METRICS = CLASSES + "," + DIRECTORIES + "," + FILES + "," + FUNCTIONS + "," + PUBLIC_API + "," + STATEMENTS + "," + LINES_OF_CODE + "," + COVERAGE + "," + TESTS + "," + COMPLEXITY + "," + CLASS_COMPLEXITY + "," + FILE_COMPLEXITY + "," + FUNCTION_COMPLEXITY + "," + COMMENT_LINES + "," + COMMENT_LINES_DENSITY;
+    public static final String SQALE_INDEX = "sqale_index";
+    
+    public static final String LIST_OF_METRICS = CLASSES + "," + DIRECTORIES + "," + FILES + "," + FUNCTIONS + "," + PUBLIC_API + "," + STATEMENTS + "," + LINES_OF_CODE + "," + COVERAGE + "," + TESTS + "," + COMPLEXITY + "," + CLASS_COMPLEXITY + "," + FILE_COMPLEXITY + "," + FUNCTION_COMPLEXITY + "," + COMMENT_LINES + "," + COMMENT_LINES_DENSITY + "," + SQALE_INDEX;
 
     static final String PROJECT_METRICS = "api/resources?resource=PROJECT&depth=-1&metrics=" + LIST_OF_METRICS;
 

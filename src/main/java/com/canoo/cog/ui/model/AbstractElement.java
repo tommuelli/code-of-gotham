@@ -18,18 +18,20 @@ public abstract class AbstractElement<T extends Shape3D> extends Group {
 
 	private Tooltip tooltip = new Tooltip();
 	private String info;
+	private int level;
 
 	
 	
 	protected abstract T createShape();
 
-	public AbstractElement(double inWidth, double xOffset, double zOffset, double inHeight, String info) {
+	public AbstractElement(double inWidth, double xOffset, double zOffset, double inHeight, String info, int aLevlel) {
 		
 		this.height = inHeight;
 		this.width = inWidth;
 		this.xOffset = xOffset;
 		this.zOffset = zOffset;
 		this.info = info;
+		this.level = aLevlel;
 		shape = createShape();
 		Tooltip.install(shape, tooltip);
 	
@@ -38,12 +40,19 @@ public abstract class AbstractElement<T extends Shape3D> extends Group {
 		
 		getChildren().add(shape);
 		shape.setOnMouseClicked(event -> {
-		
             	Info.update(info);
-			
            });
 	}
 
+	
+	public int getLevel() {
+		return level;
+	}
+
+	protected void update(){
+		
+	}
+	
 	public T getShape() {
 		return shape;
 	}

@@ -28,6 +28,8 @@ public class JsonToModelConverter {
         String buildingName = modelObject.get("lname").getAsString();
         BuildingModelImpl newBuilding = new BuildingModelImpl(buildingName);
         fillModel(modelObject.get("msr").getAsJsonArray(), newBuilding);
+        
+        System.out.println(newBuilding);
         return newBuilding;
     }
 
@@ -82,6 +84,9 @@ public class JsonToModelConverter {
                 case SonarConstants.STATEMENTS:
                     model.setStatements(val);
                     break;
+                case SonarConstants.SQALE_INDEX:
+                	model.setSqaleIndex(val);
+                	break;
             }
         }
     }
