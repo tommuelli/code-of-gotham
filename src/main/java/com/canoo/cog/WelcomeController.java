@@ -23,8 +23,14 @@ import com.canoo.cog.ui.CityBuilder;
 
 class WelcomeController {
 
+    private static final String COG_PROXY_KEY = "cogProxy";
+    private static final String COG_SONAR_HOST_KEY = "cogSonarHost";
+
     @FXML
     private TextField sonarHostname;
+    
+    @FXML
+    private TextField proxy;
 
     @FXML
     private PasswordField passwordTextField;
@@ -61,10 +67,25 @@ class WelcomeController {
 
     public void init() {
 
-       // sonarHostname.setText("https://ci.canoo.com/sonar/");http://nemo.sonarqube.org/
-    	sonarHostname.setText("http://localhost:9000/");
-    	sonarHostname.setText("http://nemo.sonarqube.org/");
+
+      	
+      	//-DcogSonarHost=http://nemo.sonarqube.org/
+      	String sonarHostnameDefault = System.getProperty(COG_SONAR_HOST_KEY);
+      	
+      	if (sonarHostnameDefault != null && !sonarHostnameDefault.isEmpty()){
+      	  sonarHostname.setText(sonarHostnameDefault);
+      	}
+      	else {
+          // sonarHostname.setText("https://ci.canoo.com/sonar/");http://nemo.sonarqube.org/
+          sonarHostname.setText("http://localhost:9000/");
+          //sonarHostname.setText("http://nemo.sonarqube.org/");
+      	}
+      	
+      	String proxyDefault = System.getProperty(COG_PROXY_KEY);
     	 
+      	if (proxyDefault != null && !proxyDefault.isEmpty()){
+      	  proxy.setText(proxyDefault);
+      	}
 
         keyColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("key"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("name"));
@@ -106,7 +127,7 @@ class WelcomeController {
     private void loadProjects() {
 
         new Thread(() -> {
-            sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText());
+            sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
             projects = null;
             try {
             	projects = sonarService.getProjects();

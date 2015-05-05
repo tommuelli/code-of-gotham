@@ -90,7 +90,7 @@ public class SolverTest {
         Solver solver = new LittleBetterSolverEver();
 
         SonarService sonarService = new SonarService();
-        sonarService.setSonarSettings("http://localhost:9000/", "", "");
+        sonarService.setSonarSettings("http://localhost:9000/", "", "","");
         CityModel cityData = sonarService.getCityData("code-of-gotham:code-of-gotham");
         CityNode cityNode = new SonarToStrategyConerter().convertCityToNode(cityData);
         solver.solveProblem(cityNode, 1);
