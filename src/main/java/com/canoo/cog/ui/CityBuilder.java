@@ -36,9 +36,12 @@ import com.canoo.cog.ui.strategy.SonarToStrategyConerter;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.control.MenuBar;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -53,6 +56,8 @@ import com.canoo.cog.ui.model.AbstractElement;
 import com.canoo.cog.ui.model.Building;
 import com.canoo.cog.ui.model.City;
 import com.canoo.cog.ui.model.Hood;
+import com.canoo.cog.ui.model.style.CityStyle;
+import com.canoo.cog.ui.model.style.CityStyle.Style;
 import com.canoo.cog.ui.model.text.Info;
 import com.canoo.cog.ui.strategy.CityNode;
 import com.canoo.cog.ui.strategy.LittleBetterSolverEver;
@@ -61,12 +66,22 @@ import com.canoo.cog.ui.strategy.SonarToStrategyConerter;
 
 public class CityBuilder {
 
-    private static final int STREET_SIZE = 6;
+    private static final int HEIGHT_DIVISOR = 3;
+
+	private static final int SCENE_HEIGHT = 1000;
+
+	private static final int SCENE_WIDTH = 1500;
+
+	private static final int STREET_SIZE = 6;
+	
+	public static final Style INITIAL_STYLE =Style.GOTHAM; 
 
     private CityModel cityData;
 
     private String title = "";
 
+    private SimpleStringProperty styleProperty = new SimpleStringProperty();
+    
     public String getTitle() {
         return title;
     }
@@ -96,12 +111,13 @@ public class CityBuilder {
     Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
     Rotate rzBox = new Rotate(0, 0, 0, 0, Rotate.Z_AXIS);
 
+	private Scene scene;
+
     public CityBuilder(CityModel cityData) {
         this.cityData = cityData;
     }
 
-    public Scene build() {
-
+    public Scene build() { 	
         // Solve problem for city
         Solver solver = new LittleBetterSolverEver();
         CityNode resultNode = new SonarToStrategyConerter().convertCityToNode(cityData);
@@ -117,13 +133,13 @@ public class CityBuilder {
         Group root = new Group();
 
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
-        Scene scene = new Scene(root, 1500, 1000, true);
-        scene.setFill(Color.BLACK);
+        scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
+        
         scene.setCamera(camera);
 
         // Add city to group and translate them according to model
         int hoodHeight = 1;
-        int potentialHeight = resultNode.getSize() / 300;
+        int potentialHeight = resultNode.getSize() / 400;
         if(potentialHeight > 1) {
             hoodHeight = potentialHeight;
         }
@@ -156,22 +172,33 @@ public class CityBuilder {
         timeline.play();
 
         setTextProperties(root, city);
-        // Return scene with city
+        
+        
+        
+    	// initial style
+    	styleProperty.bind(CityStyle.getStyleProperty());
+    	styleProperty.addListener(listener -> setBackgroundColor());
+    	CityStyle.setStyle(INITIAL_STYLE);
         return scene;
     }
+
+	private void setBackgroundColor() {
+		scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
+	}
 
 
 
 	private void setTextProperties(Group root, City city) {
 		double depthCorrection = -city.getLayoutBounds().getDepth()/2;
-		double heightCorrectionTitle =  -city.getLayoutBounds().getHeight() / 3;
-		double heightCorrectionInfo =  -city.getLayoutBounds().getHeight() / 4;
 		
-		double widthCorrectionTitle =  city.getLayoutBounds().getHeight() / 3 -10;
-		double widthCorrectionInfo =  city.getLayoutBounds().getHeight() / 3;
+		double heightCorrectionTitle =  -(SCENE_HEIGHT / 2 -20);
+		double heightCorrectionInfo =  -SCENE_HEIGHT / 4;
 		
-		double tileFont = Math.max(city.getLayoutBounds().getDepth()/6, 42);
-		double txtFont = Math.max(city.getLayoutBounds().getDepth()/12, 32);
+		double widthCorrectionTitle =  SCENE_WIDTH / 3 -10;
+		double widthCorrectionInfo =  SCENE_WIDTH / 3;
+		
+		double tileFont = Math.min(city.getLayoutBounds().getDepth()/6, 42);
+		double txtFont = Math.min(city.getLayoutBounds().getDepth()/12, 18);
 		
 		Text titleTxt = new Text(title);
 		titleTxt.setFont(Font.font("Helvetica", FontWeight.BOLD, tileFont));
@@ -193,33 +220,35 @@ public class CityBuilder {
 
 		titleGroup.setTranslateY(heightCorrectionTitle);
 		titleGroup.setTranslateX(widthCorrectionTitle);
-//		titleGroup.setTranslateZ(depthCorrection);
+		titleGroup.setTranslateZ(depthCorrection);
 
 		elementInfoGroup.setTranslateY(heightCorrectionInfo);
 		elementInfoGroup.setTranslateX(widthCorrectionInfo);
-//		elementInfoGroup.setTranslateZ(depthCorrection);
+		elementInfoGroup.setTranslateZ(depthCorrection);
+		
+		root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
+		
+		
 	}
 
   private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
         for (CityNode node : children) {
-            String info = "File: " + node.getModel().getName() + "\nFunctions: " + node.getModel().getFunctions() + "\nLines of Code: "
-                    + node.getModel().getLinesOfCode() + "\nComplexity: " + node.getModel().getComplexity() + "\nCoverage: " + node.getModel().getCoverage()
-                    + "\nTests: " + node.getModel().getTests();
 
+        	String info = node.getModel().getInfo();
             if (node.isLeaf()) {
-
-                double height = node.getModel().getLinesOfCode() / 2;
-
-                hood.addBuilding(new Building(node.getSize(), height, node.getX(), node.getY(), hood.getColor(), info)); // Y==Z
+                double height = node.getModel().getLinesOfCode() / HEIGHT_DIVISOR;
+                hood.addBuilding(new Building(node.getSize(), height, node.getX(), node.getY(), info, node.getModel(), hood.getLevel()+1)); // Y==Z
             } else {
                 double incrementedHeight = hood.getHeight();
-                Hood childHood = new Hood(incrementedHeight, node.getSize(), node.getSize(), node.getX(), node.getY(), info);
+                Hood childHood = new Hood(incrementedHeight, node.getSize(), node.getSize(), node.getX(), node.getY(), info, hood.getLevel()+1);
                 hood.addHood(childHood);
                 addAllNodesRecursively(childHood, node.getChildren());
             }
         }
     }
 
+ 
+  
     private void buildCamera(Group root, City city) {
         System.out.println("buildCamera()");
         root.getChildren().add(cameraXform);
@@ -247,7 +276,6 @@ public class CityBuilder {
         });
 
         scene.setOnScroll(event -> {
-            System.out.println(event.getDeltaY());
             if (event.getDeltaY() < 0) {
                 CAMERA_INITIAL_DISTANCE *= 1.1;
             } else {

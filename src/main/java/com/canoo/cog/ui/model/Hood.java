@@ -27,22 +27,14 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 
 public class Hood extends AbstractElement<Box> {
+	public Hood(double height, double inWidth, double inDepth, double xOffset, double zOffset, String info, int aLevel) {
+		super(inWidth, xOffset, zOffset, height, info, aLevel);
 
-	private Color color  = new Painter().paint();
-	
-	public Color getColor() {
-		return color;
-	}
-
-	public Hood(double height, double inWidth, double inDepth, double xOffset, double zOffset, String info) {
-		super(inWidth, xOffset, zOffset, height, info);
-		
 		PhongMaterial phongMaterial = new PhongMaterial();
-		phongMaterial.setDiffuseColor(color);
+		phongMaterial.setDiffuseColor(new Painter().getPaintByLevel(super.getLevel()));
 		getShape().setWidth(inWidth);
 		getShape().setDepth(inDepth);
 		getShape().setMaterial(phongMaterial);
-
 	}
 
 	@Override

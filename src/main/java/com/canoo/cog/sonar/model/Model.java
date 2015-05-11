@@ -22,15 +22,27 @@ package com.canoo.cog.sonar.model;
 
 
 public interface Model {
-    String getName();
+	String getName();
 
-    int getLinesOfCode();
+	int getLinesOfCode();
 
-    int getFunctions();
+	int getFunctions();
+
+	int getComplexity();
+	
+	String getFileComplexity();
+
+	double getSqaleIndex();
+    public double getComplexityPerLineOfCode();
+    public double getSqualeIndexPerLineOfCode();
     
-     String getComplexity();
+    double getTopComplexityPerLineOfCode();
+    double getTopSqualeIndexPerLineOfCode();
+    double getTopSqualeIndex();
+    
+	String getTests();
 
-	 String getTests();
-
-	 String getCoverage();
+	String getCoverage();
+	
+	String getInfo();
 }

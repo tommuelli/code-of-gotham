@@ -103,6 +103,9 @@ public class JsonToModelConverter {
                 case SonarConstants.STATEMENTS:
                     model.setStatements(val);
                     break;
+                case SonarConstants.SQALE_INDEX:
+                	model.setSqaleIndex(val);
+                	break;
             }
         }
     }

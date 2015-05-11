@@ -45,7 +45,7 @@ public class SonarServiceTest {
     @Before
     public void setUp() {
         sonarService = new SonarService();
-        sonarService.setSonarSettings(testBaseUrl, "", "");
+        sonarService.setSonarSettings(testBaseUrl, "", "", "");
     }
 
     @Test
