@@ -126,8 +126,7 @@ public class CityBuilder {
         // Start music
         Media media = new Media(getClass().getResource("We Built This City Cover.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.stop();
-        mediaPlayer.setAutoPlay(true);
+        mediaPlayer.play();
 
         // Create root group and scene
         Group root = new Group();
@@ -197,8 +196,8 @@ public class CityBuilder {
 		double widthCorrectionTitle =  SCENE_WIDTH / 3 -10;
 		double widthCorrectionInfo =  SCENE_WIDTH / 3;
 		
-		double tileFont = Math.min(city.getLayoutBounds().getDepth()/6, 42);
-		double txtFont = Math.min(city.getLayoutBounds().getDepth()/12, 18);
+		double tileFont = Math.min(city.getLayoutBounds().getDepth() / 6, 42);
+		double txtFont = Math.min(city.getLayoutBounds().getDepth() / 12, 18);
 		
 		Text titleTxt = new Text(title);
 		titleTxt.setFont(Font.font("Helvetica", FontWeight.BOLD, tileFont));
@@ -220,11 +219,11 @@ public class CityBuilder {
 
 		titleGroup.setTranslateY(heightCorrectionTitle);
 		titleGroup.setTranslateX(widthCorrectionTitle);
-		titleGroup.setTranslateZ(depthCorrection);
+//		titleGroup.setTranslateZ(depthCorrection);
 
 		elementInfoGroup.setTranslateY(heightCorrectionInfo);
 		elementInfoGroup.setTranslateX(widthCorrectionInfo);
-		elementInfoGroup.setTranslateZ(depthCorrection);
+//		elementInfoGroup.setTranslateZ(depthCorrection);
 		
 		root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
 		
