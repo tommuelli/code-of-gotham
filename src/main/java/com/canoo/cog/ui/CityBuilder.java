@@ -126,7 +126,8 @@ public class CityBuilder {
         // Start music
         Media media = new Media(getClass().getResource("We Built This City Cover.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+        mediaPlayer.stop();
+        mediaPlayer.setAutoPlay(true);
 
         // Create root group and scene
         Group root = new Group();
