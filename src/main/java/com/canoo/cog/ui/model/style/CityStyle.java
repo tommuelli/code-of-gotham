@@ -68,7 +68,7 @@ public class CityStyle {
 		if (Style.GOTHAM.equals(s)) {
 			return Color.BLACK;
 		}
-		return Color.DEEPSKYBLUE;
+		return Color.BLACK;
 
 	}
 

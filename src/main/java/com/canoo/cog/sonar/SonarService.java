@@ -55,14 +55,13 @@ public class SonarService {
         this.userName = userName;
         this.password = password;
         if (proxyHostAndPort != null && proxyHostAndPort.contains(":")) {
-         try {
-          String[] split = proxyHostAndPort.split(":");
-           proxyHost = split[0];
-           proxyPort = Integer.valueOf(split[1]);
-        }
-        catch (RuntimeException re) {
-          // ignore
-        }
+            try {
+                String[] split = proxyHostAndPort.split(":");
+                proxyHost = split[0];
+                proxyPort = Integer.valueOf(split[1]);
+            } catch (RuntimeException re) {
+                // ignore
+            }
         }
     }
 
@@ -79,21 +78,20 @@ public class SonarService {
 
     String callSonarAuth(String path, String userName, String password) throws IOException {
         URL url = new URL(baseUrl + path);
-        
+
         String authPropertyKey = null;
-        HttpURLConnection connection = null; 
+        HttpURLConnection connection = null;
         String encoding = new String(Base64.encodeBase64((userName + ":" + password).getBytes()));
-        
+
         if (proxyHost != null && proxyPort != null) {
-          // use proxy
-          Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.balgroupit.com", 3128)); 
-          authPropertyKey = "Proxy-Authorization";
-          connection =  (HttpURLConnection) url.openConnection(proxy);
-        }
-        else {
-          // without proxy
-          authPropertyKey = "Authorization";
-          connection = (HttpURLConnection) url.openConnection();
+            // use proxy
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.balgroupit.com", 3128));
+            authPropertyKey = "Proxy-Authorization";
+            connection = (HttpURLConnection) url.openConnection(proxy);
+        } else {
+            // without proxy
+            authPropertyKey = "Authorization";
+            connection = (HttpURLConnection) url.openConnection();
         }
 
         connection.setRequestMethod("GET");
