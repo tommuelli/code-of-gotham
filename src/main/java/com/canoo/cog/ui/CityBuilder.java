@@ -28,10 +28,10 @@ import com.canoo.cog.sonar.model.CityModel;
 import com.canoo.cog.ui.model.Building;
 import com.canoo.cog.ui.model.City;
 import com.canoo.cog.ui.model.Hood;
-import com.canoo.cog.ui.strategy.CityNode;
-import com.canoo.cog.ui.strategy.LittleBetterSolverEver;
-import com.canoo.cog.ui.strategy.Solver;
-import com.canoo.cog.ui.strategy.SonarToStrategyConerter;
+import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.solver.LittleBetterSolverEver;
+import com.canoo.cog.solver.Solver;
+import com.canoo.cog.solver.SonarToStrategyConerter;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -40,8 +40,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -51,18 +49,9 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.ui.model.AbstractElement;
-import com.canoo.cog.ui.model.Building;
-import com.canoo.cog.ui.model.City;
-import com.canoo.cog.ui.model.Hood;
 import com.canoo.cog.ui.model.style.CityStyle;
 import com.canoo.cog.ui.model.style.CityStyle.Style;
 import com.canoo.cog.ui.model.text.Info;
-import com.canoo.cog.ui.strategy.CityNode;
-import com.canoo.cog.ui.strategy.LittleBetterSolverEver;
-import com.canoo.cog.ui.strategy.Solver;
-import com.canoo.cog.ui.strategy.SonarToStrategyConerter;
 
 public class CityBuilder {
 
@@ -124,7 +113,7 @@ public class CityBuilder {
         solver.solveProblem(resultNode, STREET_SIZE);
 
         // Start music
-        Media media = new Media(getClass().getResource("We Built This City Cover.mp3").toString());
+        Media media = new Media(getClass().getResource("song.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.stop();
         mediaPlayer.setAutoPlay(true);

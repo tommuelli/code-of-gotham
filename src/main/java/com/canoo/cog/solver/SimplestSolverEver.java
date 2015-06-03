@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.strategy;
+package com.canoo.cog.solver;
 
 /*
  * #%L
