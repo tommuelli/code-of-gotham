@@ -21,14 +21,13 @@ package com.canoo.cog.ui.welcome;
  */
 
 
-import java.io.IOException;
 import java.util.List;
 
 import com.canoo.cog.sonar.SonarException;
 import com.canoo.cog.sonar.SonarService;
 import com.canoo.cog.sonar.model.CityModel;
 import com.canoo.cog.sonar.model.SonarProject;
-import com.canoo.cog.ui.CityBuilder;
+import com.canoo.cog.ui.citybuilder.CityBuilder;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

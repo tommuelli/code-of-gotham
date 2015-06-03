@@ -1,4 +1,4 @@
-package com.canoo.cog.ui;
+package com.canoo.cog.ui.citybuilder;
 
 /*
  * #%L
@@ -25,9 +25,9 @@ package com.canoo.cog.ui;
 import java.util.List;
 
 import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.ui.model.Building;
-import com.canoo.cog.ui.model.City;
-import com.canoo.cog.ui.model.Hood;
+import com.canoo.cog.ui.citybuilder.model.Building;
+import com.canoo.cog.ui.citybuilder.model.City;
+import com.canoo.cog.ui.citybuilder.model.Hood;
 import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.solver.LittleBetterSolverEver;
 import com.canoo.cog.solver.Solver;
@@ -49,9 +49,9 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
-import com.canoo.cog.ui.model.style.CityStyle;
-import com.canoo.cog.ui.model.style.CityStyle.Style;
-import com.canoo.cog.ui.model.text.Info;
+import com.canoo.cog.ui.citybuilder.model.style.CityStyle;
+import com.canoo.cog.ui.citybuilder.model.style.CityStyle.Style;
+import com.canoo.cog.ui.citybuilder.model.text.Info;
 
 public class CityBuilder {
 

@@ -1,4 +1,4 @@
-package com.canoo.cog.ui;
+package com.canoo.cog.ui.citybuilder;
 
 /*
  * #%L
@@ -21,10 +21,10 @@ package com.canoo.cog.ui;
  */
 
 
-import com.canoo.cog.ui.model.AbstractElement;
-import com.canoo.cog.ui.model.Building;
-import com.canoo.cog.ui.model.City;
-import com.canoo.cog.ui.model.Hood;
+import com.canoo.cog.ui.citybuilder.model.AbstractElement;
+import com.canoo.cog.ui.citybuilder.model.Building;
+import com.canoo.cog.ui.citybuilder.model.City;
+import com.canoo.cog.ui.citybuilder.model.Hood;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
