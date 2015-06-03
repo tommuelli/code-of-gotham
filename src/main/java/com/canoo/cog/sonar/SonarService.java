@@ -27,15 +27,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.Proxy;
 import java.net.URL;
 import java.util.List;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.IOUtils;
-
 import com.canoo.cog.sonar.model.CityModel;
 import com.canoo.cog.sonar.model.SonarProject;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 
 public class SonarService {
 
@@ -50,7 +51,7 @@ public class SonarService {
         sonarResultParser = new SonarResultParser();
     }
 
-    public void setSonarSettings(String baseUrl, String userName, String password, String proxyHostAndPort) {
+    public void setSonarSettings(String baseUrl, String userName, String password, String proxyHostAndPort) throws SonarException {
         this.baseUrl = baseUrl;
         this.userName = userName;
         this.password = password;
@@ -59,46 +60,63 @@ public class SonarService {
                 String[] split = proxyHostAndPort.split(":");
                 proxyHost = split[0];
                 proxyPort = Integer.valueOf(split[1]);
-            } catch (RuntimeException re) {
-                // ignore
+            } catch (Exception e) {
+                throw new SonarException("Error when parsing the Proxy.");
             }
         }
     }
 
-    public List<SonarProject> getProjects() throws IOException {
-
-        String projectResultString = callSonarAuth("api/resources", userName, password);
+    public List<SonarProject> getProjects() throws SonarException {
+        String projectResultString = callSonarAuth(SonarConstants.SONAR_PROJECTS_QUERY, userName, password);
         return sonarResultParser.parseProjects(projectResultString);
     }
 
-    public CityModel getCityData(String projectKey) throws IOException {
+    public CityModel getCityData(String projectKey) throws SonarException {
         String cityResultString = callSonarAuth(SonarConstants.getMetricsQueryForProject(projectKey), userName, password);
         return sonarResultParser.parseCity(cityResultString);
     }
 
-    String callSonarAuth(String path, String userName, String password) throws IOException {
-        URL url = new URL(baseUrl + path);
-
-        String authPropertyKey = null;
-        HttpURLConnection connection = null;
-        String encoding = new String(Base64.encodeBase64((userName + ":" + password).getBytes()));
-
-        if (proxyHost != null && proxyPort != null) {
-            // use proxy
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.balgroupit.com", 3128));
-            authPropertyKey = "Proxy-Authorization";
-            connection = (HttpURLConnection) url.openConnection(proxy);
-        } else {
-            // without proxy
-            authPropertyKey = "Authorization";
-            connection = (HttpURLConnection) url.openConnection();
+    String callSonarAuth(String path, String userName, String password) throws SonarException {
+        URL url;
+        try {
+            url = new URL(baseUrl + path);
+        } catch (MalformedURLException e) {
+            throw new SonarException("Error in Calling Sonar Service.", e);
         }
 
-        connection.setRequestMethod("GET");
-        connection.setDoOutput(true);
-        connection.setRequestProperty(authPropertyKey, "Basic " + encoding);
-        InputStream content = connection.getInputStream();
-        BufferedReader in = new BufferedReader(new InputStreamReader(content));
-        return IOUtils.toString(in);
+        try {
+            String authPropertyKey;
+            HttpURLConnection connection;
+            String encoding = new String(Base64.encodeBase64((userName + ":" + password).getBytes()));
+
+            if (isProxyUsed()) {
+                Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("webproxy.balgroupit.com", 3128));
+                authPropertyKey = "Proxy-Authorization";
+                connection = (HttpURLConnection) url.openConnection(proxy);
+            } else {
+                authPropertyKey = "Authorization";
+                connection = (HttpURLConnection) url.openConnection();
+            }
+
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setRequestProperty(authPropertyKey, "Basic " + encoding);
+            InputStream content = connection.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(content));
+
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                throw new SonarException("HTTP Get call to " + url.getPath() + " was not successful.");
+            }
+
+            return IOUtils.toString(in);
+        } catch (ProtocolException e) {
+            throw new SonarException("Error in Calling Sonar Service.", e);
+        } catch (IOException e) {
+            throw new SonarException("Error in Calling Sonar Service.", e);
+        }
+    }
+
+    private boolean isProxyUsed() {
+        return proxyHost != null && proxyPort != null;
     }
 }

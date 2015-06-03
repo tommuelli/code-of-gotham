@@ -20,7 +20,6 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 public interface BuildingModel extends Model {
 
 }

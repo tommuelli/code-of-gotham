@@ -43,13 +43,13 @@ public class SonarServiceTest {
     private SonarService sonarService;
 
     @Before
-    public void setUp() {
+    public void setUp() throws SonarException {
         sonarService = new SonarService();
         sonarService.setSonarSettings(testBaseUrl, "", "", "");
     }
 
     @Test
-    public void testCallSonarWithHttpRequest() throws IOException {
+    public void testCallSonarWithHttpRequest() throws IOException, SonarException {
         String resultString = sonarService.callSonarAuth("api/resources", null, null);
         assertNotNull(resultString);
     }

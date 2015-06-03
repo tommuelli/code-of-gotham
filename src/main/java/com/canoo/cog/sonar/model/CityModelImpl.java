@@ -20,7 +20,6 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,8 +49,7 @@ public class CityModelImpl extends ModelImpl implements CityModel {
     public void addBuildingToCity(BuildingModelImpl building) {
         int hoodIndex = getAppropriateHoodIndex(building);
         if (hoodIndex == -1) {
-	            System.out.println("Building: " + building+" \n does not belong to a neighborhood! -> skip it ... ");
-	            
+            System.out.println("Building: " + building + " \n does not belong to a neighborhood! -> skip it ... ");
         } else {
             hoods.get(hoodIndex).addBuildingToHood(building);
         }

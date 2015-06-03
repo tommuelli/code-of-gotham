@@ -24,6 +24,7 @@ package com.canoo.cog;
 import java.io.IOException;
 import java.util.List;
 
+import com.canoo.cog.sonar.SonarException;
 import com.canoo.cog.sonar.SonarService;
 import com.canoo.cog.sonar.model.CityModel;
 import com.canoo.cog.sonar.model.SonarProject;
@@ -116,35 +117,38 @@ class WelcomeController {
     }
 
     private void loadCodeCity() {
-        CityModel cityData;
         try {
             SonarProject selectedItem = (SonarProject) projectTable.getSelectionModel().getSelectedItem();
-            cityData = sonarService.getCityData(selectedItem.getKey());
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            CityModel cityData = sonarService.getCityData(selectedItem.getKey());
+            CityBuilder cityBuilder = new CityBuilder(cityData);
+            Scene scene = cityBuilder.build();
+            Stage stage = new Stage();
+            stage.setTitle(cityBuilder.getTitle());
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.show();
+        } catch (SonarException e) {
+            // show error message in Sonar
         }
-        CityBuilder cityBuilder = new CityBuilder(cityData);
-        Scene scene = cityBuilder.build();
-
-        Stage stage = new Stage();
-        stage.setTitle(cityBuilder.getTitle());
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.show();
     }
 
     private void loadProjects() {
         new Thread(() -> {
-            sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
-            projects = null;
+            try {
+                sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
+            } catch (SonarException e) {
+                // show error message in sonar
+            }
             try {
                 projects = sonarService.getProjects();
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+                if(projects.isEmpty()) {
+                    // Show warning login might be wrong
+                } else {
+                    Platform.runLater(() -> projectTable.setItems(FXCollections.observableArrayList(projects)));
+                }
+            } catch (SonarException e) {
+                // show error message in Sonar
             }
-            Platform.runLater(() -> projectTable.setItems(FXCollections.observableArrayList(projects)));
         }).start();
     }
 }
