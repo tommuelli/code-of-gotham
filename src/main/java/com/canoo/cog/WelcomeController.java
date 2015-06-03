@@ -24,6 +24,10 @@ package com.canoo.cog;
 import java.io.IOException;
 import java.util.List;
 
+import com.canoo.cog.sonar.SonarService;
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
+import com.canoo.cog.ui.CityBuilder;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -37,11 +41,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
-import com.canoo.cog.sonar.SonarService;
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.sonar.model.SonarProject;
-import com.canoo.cog.ui.CityBuilder;
-
 class WelcomeController {
 
     private static final String COG_PROXY_KEY = "cogProxy";
@@ -49,7 +48,7 @@ class WelcomeController {
 
     @FXML
     private TextField sonarHostname;
-    
+
     @FXML
     private TextField proxy;
 
@@ -78,86 +77,74 @@ class WelcomeController {
     private TableColumn versionColumn;
 
     private SonarService sonarService;
-    private Stage stage;
     private List<SonarProject> projects;
 
-    WelcomeController(SonarService sonarService, Stage stage) {
+    WelcomeController(SonarService sonarService) {
         this.sonarService = sonarService;
-        this.stage = stage;
     }
 
     public void init() {
 
+        // Set default Sonar
+        String sonarHostnameDefault = System.getProperty(COG_SONAR_HOST_KEY);
+        if (sonarHostnameDefault != null && !sonarHostnameDefault.isEmpty()) {
+            sonarHostname.setText(sonarHostnameDefault);
+        } else {
+            sonarHostname.setText("http://");
+        }
 
-      	
-      	//-DcogSonarHost=http://nemo.sonarqube.org/
-      	String sonarHostnameDefault = System.getProperty(COG_SONAR_HOST_KEY);
-      	
-      	if (sonarHostnameDefault != null && !sonarHostnameDefault.isEmpty()){
-      	  sonarHostname.setText(sonarHostnameDefault);
-      	}
-      	else {
-          // sonarHostname.setText("https://ci.canoo.com/sonar/");http://nemo.sonarqube.org/
-          sonarHostname.setText("http://localhost:9000/");
-          //sonarHostname.setText("http://nemo.sonarqube.org/");
-      	}
-      	
-      	String proxyDefault = System.getProperty(COG_PROXY_KEY);
-    	 
-      	if (proxyDefault != null && !proxyDefault.isEmpty()){
-      	  proxy.setText(proxyDefault);
-      	}
+        // Set proxy default
+        String proxyDefault = System.getProperty(COG_PROXY_KEY);
+        if (proxyDefault != null && !proxyDefault.isEmpty()) {
+            proxy.setText(proxyDefault);
+        }
 
+        // Initialize the Welcome UI widgets
         keyColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("key"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("name"));
         versionColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("version"));
 
-        loadButton.setOnMouseClicked(event -> {
-            loadProjects();
-        });
+        loadButton.setOnMouseClicked(event -> loadProjects());
 
-        startButton.setOnMouseClicked(event -> {
-            loadCodeCity();
-        });
+        startButton.setOnMouseClicked(event -> loadCodeCity());
 
         passwordTextField.setOnKeyPressed(event -> {
-            if(event.getCode().equals(KeyCode.ENTER)) {
+            if (event.getCode() == KeyCode.ENTER) {
                 loadProjects();
             }
         });
     }
 
     private void loadCodeCity() {
-
         CityModel cityData;
         try {
-        	
-        	SonarProject selectedItem = (SonarProject)projectTable.getSelectionModel().getSelectedItem();
+            SonarProject selectedItem = (SonarProject) projectTable.getSelectionModel().getSelectedItem();
             cityData = sonarService.getCityData(selectedItem.getKey());
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
         CityBuilder cityBuilder = new CityBuilder(cityData);
-		Scene scene = cityBuilder.build();
+        Scene scene = cityBuilder.build();
+
+        Stage stage = new Stage();
         stage.setTitle(cityBuilder.getTitle());
         stage.setScene(scene);
         stage.setFullScreen(true);
+        stage.show();
     }
 
     private void loadProjects() {
-
         new Thread(() -> {
             sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
             projects = null;
             try {
-            	projects = sonarService.getProjects();
+                projects = sonarService.getProjects();
             } catch (IOException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
             }
             Platform.runLater(() -> projectTable.setItems(FXCollections.observableArrayList(projects)));
         }).start();
-
     }
 }
