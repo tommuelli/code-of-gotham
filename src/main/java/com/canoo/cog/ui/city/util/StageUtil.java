@@ -2,8 +2,11 @@ package com.canoo.cog.ui.city.util;
 
 import com.canoo.cog.ui.city.CityBuilder;
 import com.canoo.cog.ui.city.model.City;
+import com.canoo.cog.ui.city.model.style.CityStyle;
 import com.canoo.cog.ui.city.model.text.Info;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -52,5 +55,20 @@ public class StageUtil {
 //		elementInfoGroup.setTranslateZ(depthCorrection);
 
         root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
+    }
+
+    private SimpleStringProperty styleProperty = new SimpleStringProperty();
+
+    public static final CityStyle.Style INITIAL_STYLE = CityStyle.Style.GOTHAM;
+
+    public void setStyle(Scene scene) {
+        // initial style
+        styleProperty.bind(CityStyle.getStyleProperty());
+        styleProperty.addListener(listener -> setBackgroundColor(scene));
+        CityStyle.setStyle(INITIAL_STYLE);
+    }
+
+    private void setBackgroundColor(Scene scene) {
+        scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
     }
 }

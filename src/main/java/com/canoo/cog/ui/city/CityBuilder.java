@@ -26,8 +26,6 @@ import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
-import com.canoo.cog.ui.city.model.style.CityStyle;
-import com.canoo.cog.ui.city.model.style.CityStyle.Style;
 import com.canoo.cog.ui.city.util.LayoutManager;
 import com.canoo.cog.ui.city.util.StageUtil;
 import com.canoo.cog.ui.city.util.Xform;
@@ -45,11 +43,9 @@ public class CityBuilder {
 
     private static final int HEIGHT_DIVISOR = 3;
 
-	private static final int SCENE_HEIGHT = 1000;
+    private static final int SCENE_HEIGHT = 1000;
 
-	private static final int SCENE_WIDTH = 1500;
-
-	public static final Style INITIAL_STYLE =Style.GOTHAM;
+    private static final int SCENE_WIDTH = 1500;
 
     private String title = "";
 
@@ -86,7 +82,7 @@ public class CityBuilder {
     Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
     Rotate rzBox = new Rotate(0, 0, 0, 0, Rotate.Z_AXIS);
 
-	private Scene scene;
+    private Scene scene;
 
     public Scene build(CityNode resultNode, String cityName) {
         // Create root group and scene
@@ -99,10 +95,10 @@ public class CityBuilder {
         // Add city to group and translate them according to model
         int hoodHeight = 1;
         int potentialHeight = resultNode.getSize() / 400;
-        if(potentialHeight > 1) {
+        if (potentialHeight > 1) {
             hoodHeight = potentialHeight;
         }
-        City city = new City(hoodHeight,resultNode.getSize(), resultNode.getSize(), cityName);
+        City city = new City(hoodHeight, resultNode.getSize(), resultNode.getSize(), cityName);
         addAllNodesRecursively(city, resultNode.getChildren());
 
         LayoutManager layoutManager = new LayoutManager();
@@ -131,28 +127,23 @@ public class CityBuilder {
         timeline.play();
 
         stageUtil.setTextProperties(root, city, title);
+        stageUtil.setStyle(scene);
 
-    	// initial style
-    	styleProperty.bind(CityStyle.getStyleProperty());
-    	styleProperty.addListener(listener -> setBackgroundColor());
-    	CityStyle.setStyle(INITIAL_STYLE);
+
         return scene;
     }
 
-	private void setBackgroundColor() {
-		scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
-	}
 
     private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
         for (CityNode node : children) {
 
-        	String info = node.getModel().getInfo();
+            String info = node.getModel().getInfo();
             if (node.isLeaf()) {
                 double height = node.getModel().getLinesOfCode() / HEIGHT_DIVISOR;
-                hood.addBuilding(new Building(node.getSize(), height, node.getX(), node.getY(), info, node.getModel(), hood.getLevel()+1)); // Y==Z
+                hood.addBuilding(new Building(node.getSize(), height, node.getX(), node.getY(), info, node.getModel(), hood.getLevel() + 1)); // Y==Z
             } else {
                 double incrementedHeight = hood.getHeight();
-                Hood childHood = new Hood(incrementedHeight, node.getSize(), node.getSize(), node.getX(), node.getY(), info, hood.getLevel()+1);
+                Hood childHood = new Hood(incrementedHeight, node.getSize(), node.getSize(), node.getX(), node.getY(), info, hood.getLevel() + 1);
                 hood.addHood(childHood);
                 addAllNodesRecursively(childHood, node.getChildren());
             }
@@ -223,5 +214,4 @@ public class CityBuilder {
             }
         });
     }
-
 }
