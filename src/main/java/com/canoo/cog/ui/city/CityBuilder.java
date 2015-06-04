@@ -26,7 +26,6 @@ import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
-import com.canoo.cog.ui.city.util.LayoutManager;
 import com.canoo.cog.ui.city.util.StageUtil;
 import com.canoo.cog.ui.city.util.Xform;
 import javafx.animation.KeyFrame;
@@ -41,7 +40,6 @@ import javafx.util.Duration;
 
 public class CityBuilder {
 
-    private static final int HEIGHT_DIVISOR = 3;
 
     private static final int SCENE_HEIGHT = 1000;
 
@@ -85,31 +83,15 @@ public class CityBuilder {
     private Scene scene;
 
     public Scene build(CityNode resultNode, String cityName) {
+
+        City city = stageUtil.createCity(resultNode, cityName);
+
         // Create root group and scene
         Group root = new Group();
-
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
         scene.setCamera(camera);
 
-        // Add city to group and translate them according to model
-        int hoodHeight = 1;
-        int potentialHeight = resultNode.getSize() / 400;
-        if (potentialHeight > 1) {
-            hoodHeight = potentialHeight;
-        }
-        City city = new City(hoodHeight, resultNode.getSize(), resultNode.getSize(), cityName);
-        addAllNodesRecursively(city, resultNode.getChildren());
-
-        LayoutManager layoutManager = new LayoutManager();
-        layoutManager.moveCityChildrenBackToCity(city);
-        layoutManager.correctYDirection(city);
-        layoutManager.setRelativeOffset(city);
-        layoutManager.moveCityToChildren(city);
-
-        city.setTranslateX(city.getWidth() / 2);
-        city.setTranslateZ(city.getWidth() / 2);
-        city.setTranslateY(100);
 
         title = city.getInfo();
         root.getChildren().add(city);
@@ -134,21 +116,6 @@ public class CityBuilder {
     }
 
 
-    private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
-        for (CityNode node : children) {
-
-            String info = node.getModel().getInfo();
-            if (node.isLeaf()) {
-                double height = node.getModel().getLinesOfCode() / HEIGHT_DIVISOR;
-                hood.addBuilding(new Building(node.getSize(), height, node.getX(), node.getY(), info, node.getModel(), hood.getLevel() + 1)); // Y==Z
-            } else {
-                double incrementedHeight = hood.getHeight();
-                Hood childHood = new Hood(incrementedHeight, node.getSize(), node.getSize(), node.getX(), node.getY(), info, hood.getLevel() + 1);
-                hood.addHood(childHood);
-                addAllNodesRecursively(childHood, node.getChildren());
-            }
-        }
-    }
 
     private void buildCamera(Group root, City city) {
         System.out.println("buildCamera()");
