@@ -23,15 +23,13 @@ package com.canoo.cog.ui.city;
 import java.util.List;
 
 import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.sonar.model.CityModel;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
 import com.canoo.cog.ui.city.model.style.CityStyle;
 import com.canoo.cog.ui.city.model.style.CityStyle.Style;
-import com.canoo.cog.ui.city.model.text.Info;
 import com.canoo.cog.ui.city.util.LayoutManager;
-import com.canoo.cog.ui.city.util.SphereMenuBuilder;
+import com.canoo.cog.ui.city.util.StageUtil;
 import com.canoo.cog.ui.city.util.Xform;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -40,10 +38,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -55,14 +49,14 @@ public class CityBuilder {
 
 	private static final int SCENE_WIDTH = 1500;
 
-	public static final Style INITIAL_STYLE =Style.GOTHAM; 
-
-    private CityModel cityData;
+	public static final Style INITIAL_STYLE =Style.GOTHAM;
 
     private String title = "";
 
+    private final StageUtil stageUtil = new StageUtil();
+
     private SimpleStringProperty styleProperty = new SimpleStringProperty();
-    
+
     public String getTitle() {
         return title;
     }
@@ -136,7 +130,7 @@ public class CityBuilder {
         timeline.getKeyFrames().add(kf);
         timeline.play();
 
-        setTextProperties(root, city);
+        stageUtil.setTextProperties(root, city, title);
 
     	// initial style
     	styleProperty.bind(CityStyle.getStyleProperty());
@@ -149,48 +143,7 @@ public class CityBuilder {
 		scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
 	}
 
-	private void setTextProperties(Group root, City city) {
-		double depthCorrection = -city.getLayoutBounds().getDepth()/2;
-		
-		double heightCorrectionTitle =  -(SCENE_HEIGHT / 2 -20);
-		double heightCorrectionInfo =  -SCENE_HEIGHT / 4;
-		
-		double widthCorrectionTitle =  SCENE_WIDTH / 3 -10;
-		double widthCorrectionInfo =  SCENE_WIDTH / 3;
-		
-		double tileFont = Math.min(city.getLayoutBounds().getDepth() / 6, 42);
-		double txtFont = Math.min(city.getLayoutBounds().getDepth() / 12, 18);
-		
-		Text titleTxt = new Text(title);
-		titleTxt.setFont(Font.font("Helvetica", FontWeight.BOLD, tileFont));
-		titleTxt.setFill(Color.WHITESMOKE);
-
-		Text elementInfoTxt = new Text();
-		elementInfoTxt.setFont(Font.font("Helvetica", FontWeight.BOLD, txtFont));
-		elementInfoTxt.setFill(Color.WHITESMOKE);
-		elementInfoTxt.textProperty().bind(Info.getInfoProperty());
-
-		Group titleGroup = new Group();
-		titleGroup.getChildren().add(titleTxt);
-
-		Group elementInfoGroup = new Group();
-		elementInfoGroup.getChildren().add(elementInfoTxt);
-
-		root.getChildren().add(titleGroup);
-		root.getChildren().add(elementInfoGroup);
-
-		titleGroup.setTranslateY(heightCorrectionTitle);
-		titleGroup.setTranslateX(widthCorrectionTitle);
-//		titleGroup.setTranslateZ(depthCorrection);
-
-		elementInfoGroup.setTranslateY(heightCorrectionInfo);
-		elementInfoGroup.setTranslateX(widthCorrectionInfo);
-//		elementInfoGroup.setTranslateZ(depthCorrection);
-		
-		root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
-	}
-
-  private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
+    private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
         for (CityNode node : children) {
 
         	String info = node.getModel().getInfo();
