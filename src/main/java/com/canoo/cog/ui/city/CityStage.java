@@ -27,8 +27,7 @@ public class CityStage {
         // Build city
         CityBuilder cityBuilder = new CityBuilder();
         Stage stage = new Stage();
-        Scene scene = cityBuilder.build(resultNode, cityData.getName());
-        stage.setTitle(cityBuilder.getTitle());
+        Scene scene = cityBuilder.buildScene(resultNode, cityData.getName());
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
