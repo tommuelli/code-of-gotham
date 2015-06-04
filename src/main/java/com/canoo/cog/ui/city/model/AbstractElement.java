@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model;
+package com.canoo.cog.ui.city.model;
 
 /*
  * #%L
@@ -21,7 +21,7 @@ package com.canoo.cog.ui.citybuilder.model;
  */
 
 
-import com.canoo.cog.ui.citybuilder.model.text.Info;
+import com.canoo.cog.ui.city.model.text.Info;
 
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;

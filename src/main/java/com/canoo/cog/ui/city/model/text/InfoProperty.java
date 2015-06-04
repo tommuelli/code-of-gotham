@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model.text;
+package com.canoo.cog.ui.city.model.text;
 
 /*
  * #%L
@@ -21,14 +21,12 @@ package com.canoo.cog.ui.citybuilder.model.text;
  */
 
 
-public class Info {
-	private static InfoProperty infoProperty = new InfoProperty();
-	public static void update (String info) {
-		infoProperty.setValue(info);
-	}
-	public static InfoProperty getInfoProperty() {
-		return infoProperty;
-	}
+import javafx.beans.property.SimpleStringProperty;
 
-	
+public class InfoProperty extends SimpleStringProperty {
+
+	@Override
+	public String getName() {
+		return "info";
+	}
 }

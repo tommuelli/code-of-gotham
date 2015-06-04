@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model;
+package com.canoo.cog.ui.city.model;
 
 
 /*
@@ -21,7 +21,7 @@ package com.canoo.cog.ui.citybuilder.model;
  * #L%
  */
 
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle;
+import com.canoo.cog.ui.city.model.style.CityStyle;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.beans.property.*;

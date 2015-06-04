@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model.style;
+package com.canoo.cog.ui.city.model.style;
 
 /*
  * #%L
@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.canoo.cog.ui.citybuilder.model.Painter;
+import com.canoo.cog.ui.city.model.Painter;
 
 public class CityStyle {
 

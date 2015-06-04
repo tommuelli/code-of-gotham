@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder;
+package com.canoo.cog.ui.city.util;
 
 /*
  * #%L
@@ -21,7 +21,7 @@ package com.canoo.cog.ui.citybuilder;
  */
 
 
-import com.canoo.cog.ui.citybuilder.model.AbstractElement;
+import com.canoo.cog.ui.city.model.AbstractElement;
 
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;

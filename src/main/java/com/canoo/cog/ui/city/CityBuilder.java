@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder;
+package com.canoo.cog.ui.city;
 
 /*
  * #%L
@@ -20,19 +20,19 @@ package com.canoo.cog.ui.citybuilder;
  * #L%
  */
 
-
-
 import java.util.List;
 
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.ui.citybuilder.model.Building;
-import com.canoo.cog.ui.citybuilder.model.City;
-import com.canoo.cog.ui.citybuilder.model.Hood;
 import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.solver.LittleBetterSolverEver;
-import com.canoo.cog.solver.Solver;
-import com.canoo.cog.solver.SonarToStrategyConerter;
-
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.ui.city.model.Building;
+import com.canoo.cog.ui.city.model.City;
+import com.canoo.cog.ui.city.model.Hood;
+import com.canoo.cog.ui.city.model.style.CityStyle;
+import com.canoo.cog.ui.city.model.style.CityStyle.Style;
+import com.canoo.cog.ui.city.model.text.Info;
+import com.canoo.cog.ui.city.util.LayoutManager;
+import com.canoo.cog.ui.city.util.SphereMenuBuilder;
+import com.canoo.cog.ui.city.util.Xform;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -40,18 +40,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle;
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle.Style;
-import com.canoo.cog.ui.citybuilder.model.text.Info;
 
 public class CityBuilder {
 
@@ -61,8 +55,6 @@ public class CityBuilder {
 
 	private static final int SCENE_WIDTH = 1500;
 
-	private static final int STREET_SIZE = 6;
-	
 	public static final Style INITIAL_STYLE =Style.GOTHAM; 
 
     private CityModel cityData;
@@ -102,28 +94,12 @@ public class CityBuilder {
 
 	private Scene scene;
 
-    public CityBuilder(CityModel cityData) {
-        this.cityData = cityData;
-    }
-
-    public Scene build() { 	
-        // Solve problem for city
-        Solver solver = new LittleBetterSolverEver();
-        CityNode resultNode = new SonarToStrategyConerter().convertCityToNode(cityData);
-        solver.solveProblem(resultNode, STREET_SIZE);
-
-        // Start music
-        Media media = new Media(getClass().getResource("song.mp3").toString());
-        MediaPlayer mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.stop();
-        mediaPlayer.setAutoPlay(true);
-
+    public Scene build(CityNode resultNode, String cityName) {
         // Create root group and scene
         Group root = new Group();
 
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
         scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
-        
         scene.setCamera(camera);
 
         // Add city to group and translate them according to model
@@ -132,7 +108,7 @@ public class CityBuilder {
         if(potentialHeight > 1) {
             hoodHeight = potentialHeight;
         }
-        City city = new City(hoodHeight,resultNode.getSize(), resultNode.getSize(), cityData.getName());
+        City city = new City(hoodHeight,resultNode.getSize(), resultNode.getSize(), cityName);
         addAllNodesRecursively(city, resultNode.getChildren());
 
         LayoutManager layoutManager = new LayoutManager();
@@ -161,9 +137,7 @@ public class CityBuilder {
         timeline.play();
 
         setTextProperties(root, city);
-        
-        
-        
+
     	// initial style
     	styleProperty.bind(CityStyle.getStyleProperty());
     	styleProperty.addListener(listener -> setBackgroundColor());
@@ -174,8 +148,6 @@ public class CityBuilder {
 	private void setBackgroundColor() {
 		scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
 	}
-
-
 
 	private void setTextProperties(Group root, City city) {
 		double depthCorrection = -city.getLayoutBounds().getDepth()/2;
@@ -216,8 +188,6 @@ public class CityBuilder {
 //		elementInfoGroup.setTranslateZ(depthCorrection);
 		
 		root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
-		
-		
 	}
 
   private void addAllNodesRecursively(Hood hood, List<CityNode> children) {
@@ -236,8 +206,6 @@ public class CityBuilder {
         }
     }
 
- 
-  
     private void buildCamera(Group root, City city) {
         System.out.println("buildCamera()");
         root.getChildren().add(cameraXform);
@@ -302,4 +270,5 @@ public class CityBuilder {
             }
         });
     }
+
 }

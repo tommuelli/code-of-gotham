@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model;
+package com.canoo.cog.ui.city.model;
 
 /*
  * #%L

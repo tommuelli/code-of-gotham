@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder;
+package com.canoo.cog.ui.city.util;
 
 /*
  * #%L
@@ -25,8 +25,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle;
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle.Style;
+import com.canoo.cog.ui.city.model.style.CityStyle;
+import com.canoo.cog.ui.city.model.style.CityStyle.Style;
 
 
 public class SphereMenuBuilder {

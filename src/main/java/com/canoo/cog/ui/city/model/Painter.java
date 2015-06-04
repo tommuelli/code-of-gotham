@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.citybuilder.model;
+package com.canoo.cog.ui.city.model;
 
 
 /*
@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.canoo.cog.ui.citybuilder.model.style.CityStyle;
+import com.canoo.cog.ui.city.model.style.CityStyle;
 import javafx.scene.paint.Color;
 
 public class Painter {
