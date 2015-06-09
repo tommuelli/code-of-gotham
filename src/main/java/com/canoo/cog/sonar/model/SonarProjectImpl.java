@@ -20,7 +20,6 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 public class SonarProjectImpl implements SonarProject {
 
     private final String key;

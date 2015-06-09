@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.strategy;
+package com.canoo.cog.ui.city.model.text;
 
 /*
  * #%L
@@ -21,6 +21,12 @@ package com.canoo.cog.ui.strategy;
  */
 
 
-public interface Solver {
-    void solveProblem(CityNode node, int streetSize);
+import javafx.beans.property.SimpleStringProperty;
+
+public class InfoProperty extends SimpleStringProperty {
+
+	@Override
+	public String getName() {
+		return "info";
+	}
 }

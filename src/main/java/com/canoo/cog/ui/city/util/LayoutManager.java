@@ -1,4 +1,4 @@
-package com.canoo.cog.ui;
+package com.canoo.cog.ui.city.util;
 
 /*
  * #%L
@@ -21,23 +21,23 @@ package com.canoo.cog.ui;
  */
 
 
-import com.canoo.cog.ui.model.AbstractElement;
-import com.canoo.cog.ui.model.Building;
-import com.canoo.cog.ui.model.City;
-import com.canoo.cog.ui.model.Hood;
+import com.canoo.cog.ui.city.model.AbstractElement;
+import com.canoo.cog.ui.city.model.Building;
+import com.canoo.cog.ui.city.model.City;
+import com.canoo.cog.ui.city.model.Hood;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 public class LayoutManager {
 
-    void moveCityToChildren(City city) {
+    public void moveCityToChildren(City city) {
         double xOffset = city.getShape().getWidth()/2;
         double zOffset = city.getShape().getWidth()/2;
         city.getShape().setTranslateX(-xOffset);
         city.getShape().setTranslateZ(-zOffset);
     }
 
-    void moveCityChildrenBackToCity(AbstractElement element) {
+    public void moveCityChildrenBackToCity(AbstractElement element) {
         ObservableList<Node> children = element.getChildren();
         for (Node child : children) {
             if (child instanceof AbstractElement) {
@@ -51,7 +51,7 @@ public class LayoutManager {
         }
     }
 
-    void correctYDirection(AbstractElement element) {
+    public void correctYDirection(AbstractElement element) {
         ObservableList<Node> children = element.getChildren();
         for (Node child : children) {
             if (child instanceof AbstractElement) {
@@ -69,7 +69,7 @@ public class LayoutManager {
         }
     }
 
-    void setRelativeOffset(AbstractElement element) {
+    public void setRelativeOffset(AbstractElement element) {
         ObservableList<Node> children = element.getChildren();
         for (Node child : children) {
             if (child instanceof AbstractElement) {

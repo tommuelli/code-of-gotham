@@ -20,29 +20,32 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 public interface Model {
-	String getName();
+    String getName();
 
-	int getLinesOfCode();
+    int getLinesOfCode();
 
-	int getFunctions();
+    int getFunctions();
 
-	int getComplexity();
-	
-	String getFileComplexity();
+    int getComplexity();
 
-	double getSqaleIndex();
+    String getFileComplexity();
+
+    double getSqaleIndex();
+
     public double getComplexityPerLineOfCode();
-    public double getSqualeIndexPerLineOfCode();
-    
-    double getTopComplexityPerLineOfCode();
-    double getTopSqualeIndexPerLineOfCode();
-    double getTopSqualeIndex();
-    
-	String getTests();
 
-	String getCoverage();
-	
-	String getInfo();
+    public double getSqualeIndexPerLineOfCode();
+
+    double getTopComplexityPerLineOfCode();
+
+    double getTopSqualeIndexPerLineOfCode();
+
+    double getTopSqualeIndex();
+
+    String getTests();
+
+    String getCoverage();
+
+    String getInfo();
 }

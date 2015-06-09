@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.model;
+package com.canoo.cog.ui.city.model.text;
 
 /*
  * #%L
@@ -21,19 +21,14 @@ package com.canoo.cog.ui.model;
  */
 
 
-import javafx.scene.shape.Box;
-
-
-public class City extends Hood {
-
-	public City(double inHeight, double inWidth, double inDepth, String info) {
-		super(inHeight ,inWidth, inDepth, 0, 0, info, 0);
+public class Info {
+	private static InfoProperty infoProperty = new InfoProperty();
+	public static void update (String info) {
+		infoProperty.setValue(info);
 	}
+	public static InfoProperty getInfoProperty() {
+		return infoProperty;
+	}
+
 	
-	protected Box createShape() {
-		Box box =  new Box();
-		box.setHeight(8);
-		box.setTranslateY(4);
-		return box;
-	}
 }

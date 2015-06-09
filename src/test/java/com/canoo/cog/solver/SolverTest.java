@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.strategy;
+package com.canoo.cog.solver;
 
 /*
  * #%L
@@ -19,7 +19,6 @@ package com.canoo.cog.ui.strategy;
  * limitations under the License.
  * #L%
  */
-
 
 import java.util.Arrays;
 

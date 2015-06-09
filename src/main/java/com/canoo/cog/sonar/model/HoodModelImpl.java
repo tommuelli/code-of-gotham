@@ -20,7 +20,6 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -40,7 +40,6 @@ class SonarResultParser {
     private final JsonParser jsonParser = new JsonParser();
 
     List<SonarProject> parseProjects(String projectResultString) {
-
         List<SonarProject> sonarProjects = new ArrayList<>();
 
         JsonElement projects = jsonParser.parse(projectResultString);

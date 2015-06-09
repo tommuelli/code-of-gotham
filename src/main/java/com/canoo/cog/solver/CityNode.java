@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.strategy;
+package com.canoo.cog.solver;
 
 /*
  * #%L
@@ -42,7 +42,7 @@ public class CityNode {
         }
     }
 
-    CityNode(int size) {
+    public CityNode(int size) {
         this.size = size;
         children = new ArrayList<>();
     }

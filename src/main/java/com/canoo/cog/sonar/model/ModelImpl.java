@@ -20,16 +20,9 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
-
-
-
-
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.Temporal;
 import java.util.Locale;
 
 public class ModelImpl implements Model {

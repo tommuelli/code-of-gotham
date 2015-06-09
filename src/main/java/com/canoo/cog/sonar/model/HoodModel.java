@@ -20,7 +20,6 @@ package com.canoo.cog.sonar.model;
  * #L%
  */
 
-
 import java.util.List;
 
 public interface HoodModel extends Model {
