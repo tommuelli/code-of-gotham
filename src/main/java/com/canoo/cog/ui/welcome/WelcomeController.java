@@ -24,8 +24,8 @@ package com.canoo.cog.ui.welcome;
 import java.util.List;
 
 import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.solver.LittleBetterSolverEver;
 import com.canoo.cog.solver.Solver;
+import com.canoo.cog.solver.SolverMaximusHaeckius;
 import com.canoo.cog.solver.SonarToStrategyConerter;
 import com.canoo.cog.sonar.SonarException;
 import com.canoo.cog.sonar.SonarService;
@@ -38,6 +38,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -115,6 +116,16 @@ class WelcomeController {
                 loadProjects();
             }
         });
+
+        projectTable.setRowFactory(tv -> {
+            TableRow<String> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    loadCodeCity();
+                }
+            });
+            return row ;
+        });
     }
 
     private void loadCodeCity() {
@@ -125,7 +136,7 @@ class WelcomeController {
 
             // Solve problem with Solver
             final int STREET_SIZE = 6;
-            Solver solver = new LittleBetterSolverEver();
+            Solver solver = new SolverMaximusHaeckius();
             CityNode resultNode = new SonarToStrategyConerter().convertCityToNode(cityData);
             solver.solveProblem(resultNode, STREET_SIZE);
 
