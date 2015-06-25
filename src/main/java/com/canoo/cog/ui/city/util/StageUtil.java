@@ -1,5 +1,25 @@
 package com.canoo.cog.ui.city.util;
 
+/*
+ * #%L
+ * code-of-gotham
+ * %%
+ * Copyright (C) 2015 Canoo Engineering AG
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
 import java.util.List;
 
 import com.canoo.cog.solver.CityNode;
@@ -15,6 +35,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -42,6 +63,7 @@ public class StageUtil {
     double mouseDeltaY;
 
     private double CAMERA_INITIAL_DISTANCE = -1200;
+    private double CAMERA_INITIAL_DISTANCE2 = 0;
     private final double CAMERA_INITIAL_X_ANGLE = -30;
     private final double CAMERA_INITIAL_Y_ANGLE = 30.0;
     private final double CAMERA_NEAR_CLIP = 0.1;
@@ -190,6 +212,34 @@ public class StageUtil {
             } else if (me.isMiddleButtonDown()) {
                 cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX * MOUSE_SPEED * modifier * TRACK_SPEED);
                 cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY * MOUSE_SPEED * modifier * TRACK_SPEED);
+            }        
+        });
+
+        scene.setOnKeyPressed(me -> {
+            switch (me.getCode()){
+                case UP:
+                    camera.setTranslateZ(CAMERA_INITIAL_DISTANCE += 10);
+                    break;
+                case DOWN:
+                    camera.setTranslateZ(CAMERA_INITIAL_DISTANCE -= 10);
+                    break;
+                case LEFT:
+                    camera.setTranslateX(CAMERA_INITIAL_DISTANCE2 -= 5);
+                    break;
+                case RIGHT:
+                    camera.setTranslateX(CAMERA_INITIAL_DISTANCE2 += 5);
+                    break;
+                    
+                    
+            }
+            
+        });
+        scene.setOnMouseClicked(me -> {
+            if (me.getButton() == MouseButton.SECONDARY){
+                CAMERA_INITIAL_DISTANCE = -1200;
+                camera.setTranslateZ(CAMERA_INITIAL_DISTANCE);
+                cameraXform.ry.setAngle(CAMERA_INITIAL_Y_ANGLE);
+                cameraXform.rx.setAngle(CAMERA_INITIAL_X_ANGLE);
             }
         });
     }
