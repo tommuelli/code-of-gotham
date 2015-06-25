@@ -24,8 +24,8 @@ package com.canoo.cog.ui.welcome;
 import java.util.List;
 
 import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.solver.LittleBetterSolverEver;
 import com.canoo.cog.solver.Solver;
+import com.canoo.cog.solver.SolverMaximusHaeckius;
 import com.canoo.cog.solver.SonarToStrategyConerter;
 import com.canoo.cog.sonar.SonarException;
 import com.canoo.cog.sonar.SonarService;
@@ -125,7 +125,7 @@ class WelcomeController {
 
             // Solve problem with Solver
             final int STREET_SIZE = 6;
-            Solver solver = new LittleBetterSolverEver();
+            Solver solver = new SolverMaximusHaeckius();
             CityNode resultNode = new SonarToStrategyConerter().convertCityToNode(cityData);
             solver.solveProblem(resultNode, STREET_SIZE);
 
