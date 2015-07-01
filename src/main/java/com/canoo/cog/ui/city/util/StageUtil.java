@@ -74,13 +74,13 @@ public class StageUtil {
     final Xform cameraXform3 = new Xform();
 
     public void setTextProperties(Group root, City city, String title) {
-        double depthCorrection = -city.getLayoutBounds().getDepth()/2;
+        double depthCorrection = -city.getLayoutBounds().getDepth() / 2;
 
-        double heightCorrectionTitle =  -(SCENE_HEIGHT / 2 -20);
-        double heightCorrectionInfo =  -SCENE_HEIGHT / 4;
+        double heightCorrectionTitle = -(SCENE_HEIGHT / 2 - 20);
+        double heightCorrectionInfo = -SCENE_HEIGHT / 4;
 
-        double widthCorrectionTitle =  SCENE_WIDTH / 3 -10;
-        double widthCorrectionInfo =  SCENE_WIDTH / 3;
+        double widthCorrectionTitle = SCENE_WIDTH / 3 - 10;
+        double widthCorrectionInfo = SCENE_WIDTH / 3;
 
         double tileFont = Math.min(city.getLayoutBounds().getDepth() / 6, 42);
         double txtFont = Math.min(city.getLayoutBounds().getDepth() / 12, 18);
@@ -212,11 +212,11 @@ public class StageUtil {
             } else if (me.isMiddleButtonDown()) {
                 cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX * MOUSE_SPEED * modifier * TRACK_SPEED);
                 cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY * MOUSE_SPEED * modifier * TRACK_SPEED);
-            }        
+            }
         });
 
         scene.setOnKeyPressed(me -> {
-            switch (me.getCode()){
+            switch (me.getCode()) {
                 case UP:
                     camera.setTranslateZ(CAMERA_INITIAL_DISTANCE += 10);
                     break;
@@ -229,13 +229,10 @@ public class StageUtil {
                 case RIGHT:
                     camera.setTranslateX(CAMERA_INITIAL_DISTANCE2 += 5);
                     break;
-                    
-                    
             }
-            
         });
         scene.setOnMouseClicked(me -> {
-            if (me.getButton() == MouseButton.SECONDARY){
+            if (me.getButton() == MouseButton.SECONDARY) {
                 CAMERA_INITIAL_DISTANCE = -1200;
                 camera.setTranslateZ(CAMERA_INITIAL_DISTANCE);
                 cameraXform.ry.setAngle(CAMERA_INITIAL_Y_ANGLE);
@@ -259,7 +256,6 @@ public class StageUtil {
     }
 
     private void buildCamera(Group root, PerspectiveCamera camera) {
-        System.out.println("buildCamera()");
         root.getChildren().add(cameraXform);
         cameraXform.getChildren().add(cameraXform2);
         cameraXform2.getChildren().add(cameraXform3);

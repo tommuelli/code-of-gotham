@@ -3,6 +3,8 @@ package com.canoo.cog.ui.city;
 import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.sonar.model.CityModel;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -28,8 +30,19 @@ public class CityStage {
         CityBuilder cityBuilder = new CityBuilder();
         Stage stage = new Stage();
         Scene scene = cityBuilder.buildScene(resultNode, cityData.getName());
+
+        scene.addEventHandler(KeyEvent.KEY_PRESSED,
+                keyEvent -> {
+                    if (keyEvent.getCode() == KeyCode.F11) {
+                        stage.setFullScreen(!stage.isFullScreen());
+                    }
+                    ;
+                });
+
+
         stage.setScene(scene);
-        stage.setFullScreen(true);
+        stage.setFullScreen(false);
+        stage.setOnCloseRequest(we -> mediaPlayer.stop());
         stage.show();
     }
 }

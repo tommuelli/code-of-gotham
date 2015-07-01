@@ -61,8 +61,6 @@ public class SolverMaximusHaeckius implements Solver {
 
         // Set final allocation
         setCoordinates(node, bestChildrenAllocation, streetSize);
-        //System.out.println(node.getModel().getName() + ": Final Fitness Value: " + node.getSize());
-
     }
 
     private void setCoordinates(CityNode node, List<CityNode> workingChildrenCopy, int streetSize) {
@@ -111,7 +109,6 @@ public class SolverMaximusHaeckius implements Solver {
     }
 
     private int calculateFitnessFunction(CityNode node) {
-        //System.out.println("#" + node.getModel().getName() + ": Fitness Value: " + node.getSize());
         return node.getSize();
     }
 }
