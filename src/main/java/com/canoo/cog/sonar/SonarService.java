@@ -52,6 +52,9 @@ public class SonarService {
     }
 
     public void setSonarSettings(String baseUrl, String userName, String password, String proxyHostAndPort) throws SonarException {
+        if(!baseUrl.endsWith("/")) {
+            baseUrl = baseUrl + "/";
+        }
         this.baseUrl = baseUrl;
         this.userName = userName;
         this.password = password;
