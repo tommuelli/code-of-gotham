@@ -40,8 +40,9 @@ import org.apache.commons.io.IOUtils;
 
 public class SonarService {
 
-    private String baseUrl;
     SonarResultParser sonarResultParser;
+
+    private String baseUrl;
     private String userName;
     private String password;
     private String proxyHost;

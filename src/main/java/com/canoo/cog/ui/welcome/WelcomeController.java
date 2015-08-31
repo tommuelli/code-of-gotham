@@ -108,9 +108,7 @@ class WelcomeController {
         versionColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("version"));
 
         loadButton.setOnMouseClicked(event -> loadProjects());
-
         startButton.setOnMouseClicked(event -> loadCodeCity());
-
         passwordTextField.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 loadProjects();
@@ -126,6 +124,26 @@ class WelcomeController {
             });
             return row ;
         });
+    }
+
+    private void loadProjects() {
+        // Load Projects in separate UI thread
+        new Thread(() -> {
+            try {
+                sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
+            } catch (SonarException e) {
+                // show error message in sonar
+            }
+            try {
+                projects = sonarService.getProjects();
+                if(projects.isEmpty()) {
+                } else {
+                    Platform.runLater(() -> projectTable.setItems(FXCollections.observableArrayList(projects)));
+                }
+            } catch (SonarException e) {
+                // show error message in Sonar
+            }
+        }).start();
     }
 
     private void loadCodeCity() {
@@ -147,25 +165,5 @@ class WelcomeController {
         } catch (SonarException e) {
             // show error message in Sonar
         }
-    }
-
-    private void loadProjects() {
-        new Thread(() -> {
-            try {
-                sonarService.setSonarSettings(sonarHostname.getText(), usernameField.getText(), passwordTextField.getText(), proxy.getText());
-            } catch (SonarException e) {
-                // show error message in sonar
-            }
-            try {
-                projects = sonarService.getProjects();
-                if(projects.isEmpty()) {
-                    // Show warning login might be wrong
-                } else {
-                    Platform.runLater(() -> projectTable.setItems(FXCollections.observableArrayList(projects)));
-                }
-            } catch (SonarException e) {
-                // show error message in Sonar
-            }
-        }).start();
     }
 }
