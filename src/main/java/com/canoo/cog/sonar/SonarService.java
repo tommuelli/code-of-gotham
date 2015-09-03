@@ -53,19 +53,23 @@ public class SonarService {
     }
 
     public void setSonarSettings(String baseUrl, String userName, String password, String proxyHostAndPort) throws SonarException {
-        if(!baseUrl.endsWith("/")) {
+        if (!baseUrl.endsWith("/")) {
             baseUrl = baseUrl + "/";
         }
         this.baseUrl = baseUrl;
         this.userName = userName;
         this.password = password;
-        if (proxyHostAndPort != null && proxyHostAndPort.contains(":")) {
-            try {
-                String[] split = proxyHostAndPort.split(":");
-                proxyHost = split[0];
-                proxyPort = Integer.valueOf(split[1]);
-            } catch (Exception e) {
+        if (!proxyHostAndPort.isEmpty()) {
+            if (!proxyHostAndPort.matches(".+:\\d+")) {
                 throw new SonarException("Error when parsing the Proxy.");
+            } else {
+                try {
+                    String[] split = proxyHostAndPort.split(":");
+                    proxyHost = split[0];
+                    proxyPort = Integer.valueOf(split[1]);
+                } catch (Exception e) {
+                    throw new SonarException("Error when parsing the Proxy.");
+                }
             }
         }
     }
