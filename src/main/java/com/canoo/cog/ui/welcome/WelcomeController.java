@@ -160,7 +160,7 @@ class WelcomeController {
         loadButton.setOnMouseClicked(event -> loadProjects());
         loadButton.disableProperty().bind(Bindings.or(sonarHostname.textProperty().isEmpty(), isDataOrCityLoading));
         startButton.setOnMouseClicked(event -> loadCodeCity());
-        startButton.disableProperty().bind(isDataOrCityLoading);
+        startButton.disableProperty().bind(Bindings.or(isDataOrCityLoading, projectTable.getSelectionModel().selectedIndexProperty().lessThan(0)));
         Platform.runLater(startButton::requestFocus);
     }
 
