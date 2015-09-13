@@ -28,6 +28,7 @@ import java.util.Locale;
 public class ModelImpl implements Model {
 
 	private String name;
+	private String id;
 
 	private String linesOfCode;
 	private String classes;
@@ -51,6 +52,15 @@ public class ModelImpl implements Model {
 	private static double sTopSqualeIndexPerLineOfCode = 0d;
 	private static double sTopSqualeIndex = 0d;
 
+	public ModelImpl(String name, String id) {
+		this.name = name;
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+	
 	public double getSqaleIndex() {
 		return getDoubleValue(sqaleIndex);
 	}
@@ -58,11 +68,7 @@ public class ModelImpl implements Model {
 	public void setSqaleIndex(String sqaleIndex) {
 		this.sqaleIndex = sqaleIndex;
 	}
-
-	public ModelImpl(String name) {
-		this.name = name;
-	}
-
+	
 	@Override
 	public String getName() {
 		return name;

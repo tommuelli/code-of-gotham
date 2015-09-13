@@ -20,11 +20,16 @@ package com.canoo.cog.solver;
  * #L%
  */
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
 
 import com.canoo.cog.sonar.SonarService;
 import com.canoo.cog.sonar.model.CityModel;
-import org.junit.Test;
+import com.canoo.cog.sonar.model.SonarTimeMachineEntry;
 
 public class SolverTest {
 
@@ -115,6 +120,15 @@ public class SolverTest {
         CityNode cityNode = new SonarToStrategyConerter().convertCityToNode(cityData);
         solver.solveProblem(cityNode, 1);
         System.out.println(cityNode.toStringWithNames());
-
+    }
+    @Test
+    public void testRealTimeMachine() throws Exception {
+    	Solver solver = new LittleBetterSolverEver();
+    	
+    	SonarService sonarService = new SonarService();
+    	sonarService.setSonarSettings("http://localhost:9000/", "", "","");
+        List<SonarTimeMachineEntry> timeList = sonarService.getCityTimeMachine("code-of-gotham:code-of-gotham");
+        
+        assertTrue(timeList.size() > 0);
     }
 }

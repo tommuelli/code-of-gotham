@@ -22,7 +22,7 @@ package com.canoo.cog.sonar.model;
 
 public interface Model {
     String getName();
-
+    public String getId();
     int getLinesOfCode();
 
     int getFunctions();

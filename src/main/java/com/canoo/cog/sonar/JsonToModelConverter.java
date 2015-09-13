@@ -33,21 +33,24 @@ public class JsonToModelConverter {
 
     public CityModelImpl convertToCity(JsonObject modelObject) {
         String cityName = modelObject.get("name").getAsString();
-        CityModelImpl newCity = new CityModelImpl(cityName);
+        String id = modelObject.get("key").getAsString();
+        CityModelImpl newCity = new CityModelImpl(cityName, id);
         fillModel(modelObject.get("msr").getAsJsonArray(), newCity);
         return newCity;
     }
 
     public HoodModelImpl convertToHood(JsonObject modelObject) {
         String hoodName = modelObject.get("name").getAsString();
-        HoodModelImpl newHood = new HoodModelImpl(hoodName);
+        String id = modelObject.get("key").getAsString();
+        HoodModelImpl newHood = new HoodModelImpl(hoodName, id);
         fillModel(modelObject.get("msr").getAsJsonArray(), newHood);
         return newHood;
     }
 
     public BuildingModelImpl convertToBuilding(JsonObject modelObject) {
         String buildingName = modelObject.get("lname").getAsString();
-        BuildingModelImpl newBuilding = new BuildingModelImpl(buildingName);
+        String id = modelObject.get("key").getAsString();
+        BuildingModelImpl newBuilding = new BuildingModelImpl(buildingName, id);
         fillModel(modelObject.get("msr").getAsJsonArray(), newBuilding);
         return newBuilding;
     }

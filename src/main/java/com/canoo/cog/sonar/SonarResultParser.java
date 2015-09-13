@@ -30,6 +30,8 @@ import com.canoo.cog.sonar.model.CityModelImpl;
 import com.canoo.cog.sonar.model.HoodModelImpl;
 import com.canoo.cog.sonar.model.SonarProject;
 import com.canoo.cog.sonar.model.SonarProjectImpl;
+import com.canoo.cog.sonar.model.SonarTimeMachineEntry;
+import com.canoo.cog.sonar.model.SonarTimeMachineEntryImpl;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -96,4 +98,18 @@ class SonarResultParser {
 
         return city;
     }
+
+	public List<SonarTimeMachineEntry> parseTimeMachine(String cityTimeMachineResultString) {
+        List<SonarTimeMachineEntry> timeList = new ArrayList<>();
+
+        JsonElement timemachine = jsonParser.parse(cityTimeMachineResultString);
+        JsonElement jsonElement = timemachine.getAsJsonArray().get(0);
+        JsonArray jsonArray = jsonElement.getAsJsonObject().get("cells").getAsJsonArray();
+        
+        for (JsonElement e : jsonArray) {
+			timeList.add(new SonarTimeMachineEntryImpl(e.getAsJsonObject().get("d").getAsString()));
+		}
+   
+        return timeList;
+	}
 }

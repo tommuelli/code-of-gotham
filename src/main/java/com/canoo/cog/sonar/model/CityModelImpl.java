@@ -27,8 +27,8 @@ public class CityModelImpl extends ModelImpl implements CityModel {
 
     private final List<HoodModelImpl> hoods;
 
-    public CityModelImpl(String cityName) {
-        super(cityName);
+    public CityModelImpl(String cityName, String id) {
+        super(cityName, id);
         hoods = new ArrayList<>();
     }
 

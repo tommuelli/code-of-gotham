@@ -28,8 +28,8 @@ public class HoodModelImpl extends ModelImpl implements HoodModel {
     private final List<HoodModelImpl> hoods;
     private final List<BuildingModelImpl> buildings;
 
-    public HoodModelImpl(String hoodName) {
-        super(hoodName);
+    public HoodModelImpl(String hoodName, String id) {
+        super(hoodName, id);
         buildings = new ArrayList<>();
         hoods = new ArrayList<>();
     }
