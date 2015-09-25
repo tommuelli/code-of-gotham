@@ -21,15 +21,16 @@ package com.canoo.cog.sonar;
  */
 
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.gson.JsonObject;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import com.google.gson.JsonObject;
 
 public class JsonObjectWrapperTest {
 

@@ -21,14 +21,13 @@ package com.canoo.cog.ui.city.model;
  * #L%
  */
 
-import com.canoo.cog.ui.city.model.style.CityStyle;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.image.Image;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
-import javafx.beans.property.*;
-
-import javafx.scene.image.Image;
 
 import com.canoo.cog.sonar.model.Model;
+import com.canoo.cog.ui.city.model.style.CityStyle;
 
 public class Building extends AbstractElement<Box> {
 

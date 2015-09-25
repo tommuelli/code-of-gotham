@@ -20,12 +20,14 @@ package com.canoo.cog.ui.city;
  * #L%
  */
 
-import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.ui.city.model.City;
-import com.canoo.cog.ui.city.util.StageUtil;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.SubScene;
+
+import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.ui.city.model.City;
+import com.canoo.cog.ui.city.util.StageUtil;
 
 public class CityBuilder {
 
@@ -48,10 +50,10 @@ public class CityBuilder {
         stageUtil.makeTimeLine(camera);
 
         // Set Text Properties
-        stageUtil.setTextProperties((Group) scene.getRoot(), city, city.getInfo());
+        stageUtil.setTextProperties((Group) stageUtil.getSubScene().getRoot(), city, city.getInfo());
 
         // Set city style
-        stageUtil.setStyle(scene);
+        stageUtil.setStyle(stageUtil.getSubScene());
 
         return scene;
     }

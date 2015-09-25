@@ -32,7 +32,7 @@
                         <root>src/test</root>
                     </roots>
                 </configuration>
-                <executions>
+<!--                 <executions>
                     <execution>
                         <id>first</id>
                         <goals>
@@ -40,7 +40,7 @@
                         </goals>
                         <phase>process-sources</phase>
                     </execution>
-                </executions>
+                </executions> -->
             </plugin>
         </plugins>
     </build>

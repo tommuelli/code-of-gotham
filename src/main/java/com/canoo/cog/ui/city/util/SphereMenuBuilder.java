@@ -21,11 +21,12 @@ package com.canoo.cog.ui.city.util;
  */
 
 
-import com.canoo.cog.ui.city.model.style.CityStyle;
-import com.canoo.cog.ui.city.model.style.CityStyle.Style;
 import javafx.scene.Group;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
+
+import com.canoo.cog.ui.city.model.style.CityStyle;
+import com.canoo.cog.ui.city.model.style.CityStyle.Style;
 
 
 public class SphereMenuBuilder {

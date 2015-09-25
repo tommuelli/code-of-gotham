@@ -22,26 +22,35 @@ package com.canoo.cog.ui.city.util;
 
 import java.util.List;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Orientation;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ToolBar;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.DrawMode;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
+
 import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
 import com.canoo.cog.ui.city.model.style.CityStyle;
 import com.canoo.cog.ui.city.model.text.Info;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.input.MouseButton;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.transform.Rotate;
-import javafx.util.Duration;
 
 public class StageUtil {
 
@@ -118,14 +127,14 @@ public class StageUtil {
 
     public static final CityStyle.Style INITIAL_STYLE = CityStyle.Style.GOTHAM;
 
-    public void setStyle(Scene scene) {
+    public void setStyle(SubScene subscene) {
         // initial style
         styleProperty.bind(CityStyle.getStyleProperty());
-        styleProperty.addListener(listener -> setBackgroundColor(scene));
+        styleProperty.addListener(listener -> setBackgroundColor(subscene));
         CityStyle.setStyle(INITIAL_STYLE);
     }
 
-    private void setBackgroundColor(Scene scene) {
+    private void setBackgroundColor(SubScene scene) {
         scene.setFill(CityStyle.getBackgroundColor(styleProperty.getValue()));
     }
 
@@ -245,14 +254,35 @@ public class StageUtil {
     Rotate ryBox = new Rotate(0, 0, 0, 0, Rotate.Y_AXIS);
     Rotate rzBox = new Rotate(0, 0, 0, 0, Rotate.Z_AXIS);
 
+    private SubScene subScene;
+
     public Scene initScene(City city, PerspectiveCamera camera) {
         Group root = new Group();
         buildCamera(root, camera);
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
-        Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, true);
-        scene.setCamera(camera);
+        subScene = new SubScene(root, SCENE_WIDTH, SCENE_HEIGHT, true, SceneAntialiasing.BALANCED);
+        subScene.setCamera(camera);
         root.getChildren().add(city);
+        
+        
+        // 2D
+        BorderPane pane = new BorderPane();
+        pane.setCenter(subScene);
+        Button button = new Button("Reset");
+      
+        CheckBox checkBox = new CheckBox("Line");
+        ToolBar toolBar = new ToolBar(button, checkBox);
+        toolBar.setOrientation(Orientation.VERTICAL);
+        pane.setRight(toolBar);
+        pane.setPrefSize(300,300);
+
+        Scene scene = new Scene(pane); 
+
         return scene;
+    }
+
+    public SubScene getSubScene() {
+      return subScene;
     }
 
     private void buildCamera(Group root, PerspectiveCamera camera) {

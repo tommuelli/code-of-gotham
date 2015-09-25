@@ -23,15 +23,6 @@ package com.canoo.cog.ui.welcome;
 
 import java.util.List;
 
-import com.canoo.cog.solver.CityNode;
-import com.canoo.cog.solver.Solver;
-import com.canoo.cog.solver.SolverMaximusHaeckius;
-import com.canoo.cog.solver.SonarToStrategyConerter;
-import com.canoo.cog.sonar.SonarException;
-import com.canoo.cog.sonar.SonarService;
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.sonar.model.SonarProject;
-import com.canoo.cog.ui.city.CityStage;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -43,6 +34,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
+
+import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.solver.Solver;
+import com.canoo.cog.solver.SolverMaximusHaeckius;
+import com.canoo.cog.solver.SonarToStrategyConerter;
+import com.canoo.cog.sonar.SonarException;
+import com.canoo.cog.sonar.SonarService;
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
+import com.canoo.cog.ui.city.CityStage;
 
 class WelcomeController {
 

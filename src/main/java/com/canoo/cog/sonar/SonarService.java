@@ -33,10 +33,11 @@ import java.net.Proxy;
 import java.net.URL;
 import java.util.List;
 
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.sonar.model.SonarProject;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
+
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
 
 public class SonarService {
 
