@@ -21,16 +21,16 @@
 					<fx:define>
 						<ToggleGroup fx:id="styleGroup" />
 					</fx:define>
-					<Label text="City style:" />
-					<RadioButton text="Code of Gotham" fx:id="cog"
+					<Label text="city style:" />
+					<RadioButton text="gotham" fx:id="cog"
 						toggleGroup="$styleGroup" />
-					<RadioButton text="Code Complexity" fx:id="cc"
+					<RadioButton text="code complexity" fx:id="cc"
 						toggleGroup="$styleGroup" />
-					<RadioButton text="Test Coverage" fx:id="tc"
+					<RadioButton text="test coverage" fx:id="tc"
 						toggleGroup="$styleGroup" />
-					<RadioButton text="Technical Debt" fx:id="td"
+					<RadioButton text="technical debt" fx:id="td"
 						toggleGroup="$styleGroup" />
-					<RadioButton text="Technical Debt Per Line" fx:id="tdpl"
+					<RadioButton text="t.d. per line" fx:id="tdpl"
 						toggleGroup="$styleGroup" />
 				</children>
 			</VBox>
