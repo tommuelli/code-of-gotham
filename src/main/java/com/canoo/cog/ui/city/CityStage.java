@@ -44,7 +44,7 @@ public class CityStage {
         Media media = new Media(getClass().getResource("song.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.stop();
-   //     mediaPlayer.setAutoPlay(true);
+        mediaPlayer.setAutoPlay(true);
 
         // Build city
         CityBuilder cityBuilder = new CityBuilder();

@@ -112,13 +112,10 @@ public class StageUtil {
 
         titleGroup.setTranslateY(heightCorrectionTitle);
         titleGroup.setTranslateX(widthCorrectionTitle);
-//		titleGroup.setTranslateZ(depthCorrection);
 
         elementInfoGroup.setTranslateY(heightCorrectionInfo);
         elementInfoGroup.setTranslateX(widthCorrectionInfo);
-//		elementInfoGroup.setTranslateZ(depthCorrection);
 
-        root.getChildren().addAll(new SphereMenuBuilder().build(depthCorrection, city.getWidth()));
     }
 
     private SimpleStringProperty styleProperty = new SimpleStringProperty();
@@ -272,9 +269,6 @@ public class StageUtil {
 			e.printStackTrace();
 		}
         pane.setCenter(subScene);
-
-//        ToolBar toolBar = new ToolBar(button, checkBox);
-//        toolBar.setOrientation(Orientation.VERTICAL);
         pane.setLeft(toolBar);
 
         Scene scene = new Scene(pane); 
