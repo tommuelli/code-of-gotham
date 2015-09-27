@@ -20,32 +20,30 @@ package com.canoo.cog.ui.city.util;
  * #L%
  */
 
-import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.scene.SubScene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToolBar;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.DrawMode;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.ui.city.CityToolBarService;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
@@ -267,14 +265,17 @@ public class StageUtil {
         
         // 2D
         BorderPane pane = new BorderPane();
+        Pane toolBar = null;
+		try {
+			toolBar = new CityToolBarService().load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         pane.setCenter(subScene);
-        Button button = new Button("Reset");
-      
-        CheckBox checkBox = new CheckBox("Line");
-        ToolBar toolBar = new ToolBar(button, checkBox);
-        toolBar.setOrientation(Orientation.VERTICAL);
-        pane.setRight(toolBar);
-        pane.setPrefSize(300,300);
+
+//        ToolBar toolBar = new ToolBar(button, checkBox);
+//        toolBar.setOrientation(Orientation.VERTICAL);
+        pane.setLeft(toolBar);
 
         Scene scene = new Scene(pane); 
 
