@@ -40,6 +40,7 @@ public class WelcomeService {
 
     public void startScene() throws IOException {
 
+        // Create Scene for Welcome Screen
         FXMLLoader loader = new FXMLLoader(getClass().getResource("welcome.fxml"));
         WelcomeController welcomeController = new WelcomeController(sonarService);
         loader.setController(welcomeController);
