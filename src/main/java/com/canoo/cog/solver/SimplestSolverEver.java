@@ -24,11 +24,17 @@ package com.canoo.cog.solver;
 import java.util.List;
 
 public class SimplestSolverEver implements Solver {
+
+    @Override
+    public String toString() {
+        return "Simplest Solver Ever";
+    }
+
     @Override
     public void solveProblem(CityNode node, int streetSize) {
 
         // Solve leaf
-        if(node.isLeaf()) {
+        if (node.isLeaf()) {
             return;
         }
 
@@ -43,9 +49,9 @@ public class SimplestSolverEver implements Solver {
         for (CityNode child : children) {
             child.setX(offset);
             child.setY(0);
-            offset+=child.getSize();
-            offset+=streetSize;
+            offset += child.getSize();
+            offset += streetSize;
         }
-        node.setSize(offset-1);
+        node.setSize(offset - 1);
     }
 }
