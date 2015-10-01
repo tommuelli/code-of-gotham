@@ -1,4 +1,4 @@
-package com.canoo.cog.ui.city.model.text;
+package com.canoo.cog.ui.city;
 
 /*
  * #%L
@@ -20,13 +20,21 @@ package com.canoo.cog.ui.city.model.text;
  * #L%
  */
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Pane;
 
-public class Info {
-	private static InfoProperty infoProperty = new InfoProperty();
-	public static void update (String info) {
-		infoProperty.setValue(info);
-	}
-	public static InfoProperty getInfoProperty() {
-		return infoProperty;
-	}
+import java.io.IOException;
+
+public class CityToolBarService {
+
+    public Pane load() throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("cityToolBar.fxml"));
+        CityToolBarController citySideBarController = new CityToolBarController();
+        loader.setController(citySideBarController);
+        Pane toolBar = loader.load();
+        CityToolBarController controller = loader.getController();
+        controller.init();
+        return toolBar;
+    }
 }

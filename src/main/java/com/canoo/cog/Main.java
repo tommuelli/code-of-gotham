@@ -22,10 +22,11 @@ package com.canoo.cog;
 
 import java.io.IOException;
 
-import com.canoo.cog.sonar.SonarService;
-import com.canoo.cog.ui.welcome.WelcomeService;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import com.canoo.cog.sonar.SonarService;
+import com.canoo.cog.ui.welcome.WelcomeService;
 
 public class Main extends Application {
 

@@ -21,6 +21,8 @@ package com.canoo.cog.sonar;
  */
 
 
+import static junit.framework.TestCase.assertNotNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,13 +31,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import com.canoo.cog.sonar.model.CityModel;
-import com.canoo.cog.sonar.model.SonarProject;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertNotNull;
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
 
 public class SonarServiceTest {
 

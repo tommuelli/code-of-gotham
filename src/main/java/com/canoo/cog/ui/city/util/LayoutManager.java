@@ -21,12 +21,13 @@ package com.canoo.cog.ui.city.util;
  */
 
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+
 import com.canoo.cog.ui.city.model.AbstractElement;
 import com.canoo.cog.ui.city.model.Building;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.model.Hood;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 
 public class LayoutManager {
 

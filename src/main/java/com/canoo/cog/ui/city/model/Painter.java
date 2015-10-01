@@ -26,8 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.canoo.cog.ui.city.model.style.CityStyle;
 import javafx.scene.paint.Color;
+
+import com.canoo.cog.ui.city.model.style.CityStyle;
 
 public class Painter {
 	List<Color> colors = new ArrayList<Color>();

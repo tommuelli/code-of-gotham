@@ -42,6 +42,7 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -55,7 +56,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 
-import static javafx.scene.control.Alert.AlertType;
+import java.util.List;
+
+import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.solver.Solver;
+import com.canoo.cog.solver.SolverMaximusHaeckius;
+import com.canoo.cog.solver.SonarToStrategyConerter;
+import com.canoo.cog.sonar.SonarException;
+import com.canoo.cog.sonar.SonarService;
+import com.canoo.cog.sonar.model.CityModel;
+import com.canoo.cog.sonar.model.SonarProject;
+import com.canoo.cog.ui.city.CityStage;
 
 class WelcomeController {
 
