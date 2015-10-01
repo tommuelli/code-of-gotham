@@ -30,6 +30,11 @@ public class SolverMaximusHaeckius implements Solver {
     public static final int NUMBER_OF_ITERATIONS = 5000;
 
     @Override
+    public String toString() {
+        return "Solver Maximus Haeckius";
+    }
+
+    @Override
     public void solveProblem(CityNode node, int streetSize) {
 
         // Solve leaf
@@ -43,7 +48,7 @@ public class SolverMaximusHaeckius implements Solver {
         }
 
         int minFitness = Integer.MAX_VALUE;
-        List<CityNode> bestChildrenAllocation = new ArrayList<>();;
+        List<CityNode> bestChildrenAllocation = new ArrayList<>();
         bestChildrenAllocation.addAll(node.getChildren());
 
         final List<CityNode> workingChildrenCopy = new ArrayList<>();

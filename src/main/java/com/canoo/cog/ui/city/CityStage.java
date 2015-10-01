@@ -13,10 +13,12 @@ public class CityStage {
 
     private final CityModel cityData;
     private final CityNode resultNode;
+    private boolean playMusic;
 
-    public CityStage(CityModel cityData, CityNode resultNode) {
+    public CityStage(CityModel cityData, CityNode resultNode, boolean selected) {
         this.cityData = cityData;
         this.resultNode = resultNode;
+        playMusic = selected;
     }
 
     public void startStage() {
@@ -24,7 +26,9 @@ public class CityStage {
         Media media = new Media(getClass().getResource("song.mp3").toString());
         MediaPlayer mediaPlayer = new MediaPlayer(media);
         mediaPlayer.stop();
-        mediaPlayer.setAutoPlay(true);
+        if (playMusic) {
+            mediaPlayer.setAutoPlay(true);
+        }
 
         // Build city
         CityBuilder cityBuilder = new CityBuilder();

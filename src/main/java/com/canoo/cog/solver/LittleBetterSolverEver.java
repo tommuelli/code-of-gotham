@@ -24,6 +24,12 @@ package com.canoo.cog.solver;
 import java.util.List;
 
 public class LittleBetterSolverEver implements Solver {
+
+    @Override
+    public String toString() {
+        return "Little Better Solver Ever";
+    }
+
     @Override
     public void solveProblem(CityNode node, int streetSize) {
 

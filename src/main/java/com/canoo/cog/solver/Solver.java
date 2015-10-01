@@ -22,5 +22,10 @@ package com.canoo.cog.solver;
 
 
 public interface Solver {
-    void solveProblem(CityNode node, int streetSize);
+
+    // Function to solve the placement problem of the buildings
+    public void solveProblem(CityNode node, int streetSize);
+
+    // Name that is shwon in UI to let the User choose Sovler Strategy
+    public String toString();
 }

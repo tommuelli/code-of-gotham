@@ -21,9 +21,13 @@ package com.canoo.cog.ui.welcome;
  */
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.canoo.cog.solver.CityNode;
+import com.canoo.cog.solver.LittleBetterSolverEver;
+import com.canoo.cog.solver.OptimumSolver;
+import com.canoo.cog.solver.SimplestSolverEver;
 import com.canoo.cog.solver.Solver;
 import com.canoo.cog.solver.SolverMaximusHaeckius;
 import com.canoo.cog.solver.SonarToStrategyConerter;
@@ -39,6 +43,8 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
@@ -83,19 +89,25 @@ class WelcomeController {
     private Button loadButton;
 
     @FXML
+    private ComboBox<Solver> solverBox;
+
+    @FXML
+    private CheckBox musicCheck;
+
+    @FXML
     private Button startButton;
 
     @FXML
     private TableView projectTable;
 
     @FXML
-    private TableColumn keyColumn;
+    private TableColumn<SonarProject, String> keyColumn;
 
     @FXML
-    private TableColumn nameColumn;
+    private TableColumn<SonarProject, String> nameColumn;
 
     @FXML
-    private TableColumn versionColumn;
+    private TableColumn<SonarProject, String> versionColumn;
 
     @FXML
     private ProgressIndicator progressIndicator;
@@ -141,6 +153,8 @@ class WelcomeController {
         proxy.disableProperty().bind(isDataOrCityLoading);
         usernameField.disableProperty().bind(isDataOrCityLoading);
         passwordTextField.disableProperty().bind(isDataOrCityLoading);
+        solverBox.disableProperty().bind(isDataOrCityLoading);
+        musicCheck.disableProperty().bind(isDataOrCityLoading);
 
         // Initialize the projects table
         keyColumn.setCellValueFactory(new PropertyValueFactory<SonarProject, String>("key"));
@@ -155,6 +169,15 @@ class WelcomeController {
             });
             return row;
         });
+
+        // Fill ComboBox with Solver possibilities
+        final ArrayList<Solver> solvers = new ArrayList<>();
+        solvers.add(new SolverMaximusHaeckius());
+        solvers.add(new OptimumSolver());
+        solvers.add(new LittleBetterSolverEver());
+        solvers.add(new SimplestSolverEver());
+        solverBox.getItems().addAll(solvers);
+        solverBox.getSelectionModel().select(0);
 
         // Initialize the buttons
         loadButton.setOnMouseClicked(event -> loadProjects());
@@ -221,12 +244,12 @@ class WelcomeController {
 
                 // Solve problem with Solver
                 final int STREET_SIZE = 6;
-                Solver solver = new SolverMaximusHaeckius();
+                Solver solver = solverBox.getSelectionModel().getSelectedItem();
                 CityNode resultNode = new SonarToStrategyConerter().convertCityToNode(cityData);
                 solver.solveProblem(resultNode, STREET_SIZE);
 
                 // Start City Application
-                final CityStage cityStage = new CityStage(cityData, resultNode);
+                final CityStage cityStage = new CityStage(cityData, resultNode, musicCheck.isSelected());
 
                 Platform.runLater(cityStage::startStage);
 
