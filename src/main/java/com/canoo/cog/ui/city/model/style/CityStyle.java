@@ -21,12 +21,12 @@ package com.canoo.cog.ui.city.model.style;
  */
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import com.canoo.cog.ui.city.model.Painter;
 

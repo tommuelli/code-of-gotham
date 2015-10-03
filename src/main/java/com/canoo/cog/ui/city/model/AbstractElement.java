@@ -21,11 +21,11 @@ package com.canoo.cog.ui.city.model;
  */
 
 
-import com.canoo.cog.ui.city.model.text.Info;
-
 import javafx.scene.Group;
 import javafx.scene.control.Tooltip;
 import javafx.scene.shape.Shape3D;
+
+import com.canoo.cog.ui.city.model.text.Info;
 
 public abstract class AbstractElement<T extends Shape3D> extends Group {
 

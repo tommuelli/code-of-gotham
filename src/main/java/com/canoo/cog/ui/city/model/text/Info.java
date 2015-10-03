@@ -29,6 +29,4 @@ public class Info {
 	public static InfoProperty getInfoProperty() {
 		return infoProperty;
 	}
-
-	
 }

@@ -22,9 +22,10 @@ package com.canoo.cog.solver;
 
 import java.util.Arrays;
 
+import org.junit.Test;
+
 import com.canoo.cog.sonar.SonarService;
 import com.canoo.cog.sonar.model.CityModel;
-import org.junit.Test;
 
 public class SolverTest {
 
