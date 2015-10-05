@@ -34,6 +34,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -54,6 +55,7 @@ public class StageUtil {
     private static final int SCENE_HEIGHT = 1000;
 
     private static final int SCENE_WIDTH = 1500;
+    public static final int TOOLBAR_WIDTH = 150;
 
     private final double CONTROL_MULTIPLIER = 0.1;
     private final double SHIFT_MULTIPLIER = 10.0;
@@ -263,12 +265,15 @@ public class StageUtil {
         Pane toolBar = null;
 		try {
 			toolBar = new CityToolBarService().load();
+            toolBar.setMaxWidth(TOOLBAR_WIDTH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
         stackpane.getChildren().addAll(subScene, toolBar);
+        stackpane.setAlignment(Pos.TOP_LEFT);
 
-        Scene scene = new Scene(new Group(stackpane), SCENE_WIDTH, SCENE_HEIGHT);
+
+        Scene scene = new Scene(stackpane, SCENE_WIDTH, SCENE_HEIGHT);
 
         subScene.heightProperty().bind(scene.heightProperty());
         subScene.widthProperty().bind(scene.widthProperty());

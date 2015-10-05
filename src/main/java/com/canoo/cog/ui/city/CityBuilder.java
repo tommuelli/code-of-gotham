@@ -20,14 +20,12 @@ package com.canoo.cog.ui.city;
  * #L%
  */
 
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.Scene;
-import javafx.scene.SubScene;
-
 import com.canoo.cog.solver.CityNode;
 import com.canoo.cog.ui.city.model.City;
 import com.canoo.cog.ui.city.util.StageUtil;
+import javafx.scene.Group;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
 
 public class CityBuilder {
 
