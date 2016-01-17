@@ -21,6 +21,7 @@ package com.canoo.cog.ui.city;
  */
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -33,6 +34,9 @@ import com.canoo.cog.ui.city.model.style.CityStyle.Style;
 
 class CityToolBarController {
 
+	@FXML
+	private Label projectTitle;
+	
 	@FXML
 	private ToggleGroup styleGroup;
 	@FXML
@@ -48,7 +52,10 @@ class CityToolBarController {
 
 	Map<RadioButton, CityStyle.Style> styleMap = new HashMap<>();
 
-	public void init() {
+	public void init(String cityName) {
+		
+		projectTitle.setText(cityName);
+		
 		cog.setSelected(true);
 
 		styleMap.put(cc, CityStyle.Style.COMPLEXITY_PER_LINE);

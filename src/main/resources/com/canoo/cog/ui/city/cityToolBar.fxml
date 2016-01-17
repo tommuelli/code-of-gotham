@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
-<StackPane xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<HBox spacing="8.0">
-			<VBox alignment="TOP_LEFT" spacing="2.0">
-				<children>
-					<fx:define>
-						<ToggleGroup fx:id="styleGroup" />
-					</fx:define>
-					<Label text="City style:" textFill="WHITE">
-                  <font>
-                     <Font size="16.0" />
-                  </font></Label>
-					<RadioButton fx:id="cog" text="gotham" textFill="WHITE">
-                  <toggleGroup>
-                     <ToggleGroup fx:id="styleGroup" />
-                  </toggleGroup></RadioButton>
-					<RadioButton fx:id="cc" text="code complexity" textFill="WHITE" toggleGroup="$styleGroup" />
-					<RadioButton fx:id="tc" text="test coverage" textFill="WHITE" toggleGroup="$styleGroup" />
-					<RadioButton fx:id="td" text="technical debt" textFill="WHITE" toggleGroup="$styleGroup" />
-					<RadioButton fx:id="tdpl" text="t.d. per line" textFill="WHITE" toggleGroup="$styleGroup" />
-				</children>
-			</VBox>
-			<padding>
-				<Insets left="8.0" right="8.0" />
-			</padding>
-		</HBox>
-	</children>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+  <children>
+    <HBox spacing="8.0">
+      <VBox alignment="TOP_LEFT" spacing="2.0">
+        <children>
+          <Label id="" fx:id="projectTitle" text="Project Title" textFill="WHITE">
+            <font>
+              <Font name="System Bold" size="22.0" />
+            </font>
+          </Label>
+          <fx:define>
+            <ToggleGroup fx:id="styleGroup" />
+          </fx:define>
+          <Label text="City style:" textFill="WHITE">
+            <font>
+              <Font size="16.0" />
+            </font>
+          </Label>
+          <RadioButton fx:id="cog" text="gotham" textFill="WHITE">
+            <toggleGroup>
+              <ToggleGroup fx:id="styleGroup_x0" />
+            </toggleGroup>
+          </RadioButton>
+          <RadioButton fx:id="cc" text="code complexity" textFill="WHITE" toggleGroup="$styleGroup_x0" />
+          <RadioButton fx:id="tc" text="test coverage" textFill="WHITE" toggleGroup="$styleGroup_x0" />
+          <RadioButton fx:id="td" text="technical debt" textFill="WHITE" toggleGroup="$styleGroup_x0" />
+          <RadioButton fx:id="tdpl" text="t.d. per line" textFill="WHITE" toggleGroup="$styleGroup_x0" />
+        </children>
+      </VBox>
+      <padding>
+        <Insets left="8.0" right="8.0" />
+      </padding>
+    </HBox>
+  </children>
 </StackPane>

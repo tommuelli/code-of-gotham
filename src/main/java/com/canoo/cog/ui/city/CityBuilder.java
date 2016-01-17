@@ -39,7 +39,7 @@ public class CityBuilder {
         City city = stageUtil.createCity(resultNode, cityName);
 
         // Create root group and scene
-        final Scene scene = stageUtil.initScene(city, camera);
+        final Scene scene = stageUtil.initScene(city, camera, cityName);
 
         // Add mouse events
         stageUtil.setMouseEventsToScene(scene, camera);

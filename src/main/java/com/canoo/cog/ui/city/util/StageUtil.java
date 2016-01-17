@@ -252,7 +252,7 @@ public class StageUtil {
 
     private SubScene subScene;
 
-    public Scene initScene(City city, PerspectiveCamera camera) {
+    public Scene initScene(City city, PerspectiveCamera camera, String cityName) {
         Group root = new Group();
         buildCamera(root, camera);
         root.getTransforms().addAll(rxBox, ryBox, rzBox);
@@ -264,8 +264,8 @@ public class StageUtil {
         StackPane stackpane = new StackPane();
         Pane toolBar = null;
 		try {
-			toolBar = new CityToolBarService().load();
-            toolBar.setMaxWidth(TOOLBAR_WIDTH);
+			toolBar = new CityToolBarService().load(cityName);
+//            toolBar.setMaxWidth(TOOLBAR_WIDTH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

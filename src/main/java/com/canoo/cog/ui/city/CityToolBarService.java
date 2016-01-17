@@ -27,14 +27,14 @@ import java.io.IOException;
 
 public class CityToolBarService {
 
-    public Pane load() throws IOException {
+    public Pane load(String cityName) throws IOException {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("cityToolBar.fxml"));
         CityToolBarController citySideBarController = new CityToolBarController();
         loader.setController(citySideBarController);
         Pane toolBar = loader.load();
         CityToolBarController controller = loader.getController();
-        controller.init();
+        controller.init(cityName);
         return toolBar;
     }
 }
