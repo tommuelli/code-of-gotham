@@ -4,3 +4,7 @@
 /.classpath
 /.project
 gradle.properties
+/bin/
+/.settings
+/.gradle
+/build
